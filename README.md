@@ -65,5 +65,5 @@ Copyright
 
 Copyright © 2014 Baobab Health Trust  (http://www.baobabhealth.org)
 
-![BaobabHealth](http://baobabhealth.org/wp-content/themes/atahualpa34/images/huge-logo.gif)
+![BaobabHealth](https://github.com/BaobabHealthTrust/touchscreentoolkitV2/blob/master/docs/BaobabHealth.png)
 
