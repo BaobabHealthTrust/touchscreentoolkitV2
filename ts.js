@@ -1863,16 +1863,27 @@ function loadPage(section){
   var btntable = document.createElement("div");
   btntable.style.display = "table";
   btntable.style.margin = "auto";
-  btntable.style.borderSpacing = "10px";
+  btntable.style.borderSpacing = "5px";
   btntable.style.width = "100%";
   
   buttons.appendChild(btntable);
+  
+  var brow0 = document.createElement("div");
+  brow0.style.display = "table-row";
+  
+  btntable.appendChild(brow0);
+    
+  var bcell0 = document.createElement("div");
+  bcell0.style.display = "table-cell";
+  bcell0.id = "btn0";
+  
+  brow0.appendChild(bcell0);
   
   var brow1 = document.createElement("div");
   brow1.style.display = "table-row";
   
   btntable.appendChild(brow1);
-  
+    
   var bcell1 = document.createElement("div");
   bcell1.style.display = "table-cell";
   bcell1.id = "btn1";
@@ -1901,11 +1912,27 @@ function loadPage(section){
   
   brow3.appendChild(bcell3);
   
+  btnCancel = addButton(__$("btn0"), "Cancel", "red");
+  
   btnClear = addButton(__$("btn1"), "Clear", "blue");
   
   btnBack = addButton(__$("btn2"), "Back", "gray");
   
   btnNext = addButton(__$("btn3"), "Next", "green");
+  
+  if(btnCancel){
+      btnCancel.style.width = "98%";
+      
+      btnCancel.onmousedown = function(){
+        
+        if(cancelDestination != undefined){
+          
+          window.location = cancelDestination;
+          
+        }
+        
+      }
+  }
   
   if(btnClear){
       btnClear.style.width = "98%";
@@ -1933,7 +1960,6 @@ function loadPage(section){
   work.id = "work";
   work.style.display = "table";
   work.style.width = "99.5%";
-  // work.style.border = "1px solid #000";
   
   mainContentArea.appendChild(work);
   
@@ -1947,7 +1973,6 @@ function loadPage(section){
     for(var j = 0; j < 4; j++){
       var cell = document.createElement("div");
       cell.style.display = "table-cell";
-      // cell.style.border = "1px solid #000";
       
       switch(j){
         case 0: 
