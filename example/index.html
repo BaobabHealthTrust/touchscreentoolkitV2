@@ -10,8 +10,8 @@
 				<label for="first_name">First Name:</label>
 				<input id="first_name" type="text" value="" />
 				<br>
-				<label for="middle_name">Middle Name:</label>
-				<input id="middle_name" type="text" value="" />
+				<label for="middle_name">Middle Name Initial:</label>
+				<input id="middle_name" type="text" value="" optional=true regex="^[A-Z]\.$" />
 				<br>
 				<label for="last_name">Last Name:</label>
 				<input id="last_name" type="text" value="" />
@@ -20,7 +20,7 @@
 				<input id="number" type="text" value="" fieldtype="number" />
 				<br>
 				<label for="decimal">Decimal:</label>
-				<input id="decimal" type="text" value="" fieldtype="decimal" />
+				<input id="decimal" type="text" value="" fieldtype="decimal" regex="\d+\.\d+" />
 				<br>
 				<label for="date">Date:</label>
 				<input id="date" type="text" value="" fieldtype="date" />

@@ -52,6 +52,10 @@ var cursorPos = 0;
      
 var tracker;
             
+var incomplete = false;
+
+var validityTmr;            
+            
 function __$(id){
   return document.getElementById(id);
 }
@@ -103,6 +107,8 @@ function init(){
   fieldsets = document.forms[0].getElementsByTagName("fieldset");  
   
   loadPage(currentPage);
+  
+  checkValidity();
 }
 
 function showFixedKeyboard(ctrl, container, disabled, numbers, caps){
@@ -1731,6 +1737,8 @@ function loadPage(section){
   if(isNaN(section))
     return;
   
+  currentPage = section;
+  
   if(__$("__content")){
     
     __$("__content").innerHTML = "";
@@ -1936,7 +1944,7 @@ function loadPage(section){
     
     work.appendChild(row);
     
-    for(var j = 0; j < 3; j++){
+    for(var j = 0; j < 4; j++){
       var cell = document.createElement("div");
       cell.style.display = "table-cell";
       // cell.style.border = "1px solid #000";
@@ -1960,6 +1968,13 @@ function loadPage(section){
           cell.style.fontSize = "48px";
           cell.style.verticalAlign = "middle";
           cell.id = "cell" + i + "." + j;       
+          break;
+        case 3: 
+          cell.innerHTML = "&nbsp;";
+          cell.style.width = "80px";
+          cell.style.textAlign = "center";
+          cell.style.verticalAlign = "middle";
+          cell.id = "cell" + i + "." + j;    
           break;
         case 2:  
           cell.id = "cell" + i + "." + j;  
@@ -2164,9 +2179,11 @@ function navigateTo(pos, section){
         
         btnNext.onmousedown = function(){
              
-          var section = parseInt(this.getAttribute("section")) + 1;
-          
-          loadPage(section);          
+          if(!incomplete){                      
+            var section = parseInt(this.getAttribute("section")) + 1;
+            
+            loadPage(section);          
+          }
           
         };
         
@@ -2174,7 +2191,15 @@ function navigateTo(pos, section){
         
         btnNext.innerHTML = "Finish";
         
-        btnNext.onmousedown = function(){};
+        btnNext.onmousedown = function(){
+        
+            if(!incomplete){  
+              
+              document.forms[0].submit();
+              
+            }
+          
+        };
         
       }
       
@@ -2347,6 +2372,106 @@ function checkChanges(id){
   }
   
   setTimeout("checkChanges('" + id + "')", 500);
+  
+}
+
+function checkValidity(){
+  
+  clearTimeout(validityTmr);
+  
+  var fields = fieldsets[currentPage].elements;
+  
+  incomplete = false;
+  
+  for(var i = 0; i < fields.length; i++){
+    
+    if(fields[i].getAttribute("optional") == null){
+      if(__$("textFor" + fields[i].id)){
+        if(fields[i].getAttribute("regex") != null){
+          
+          if(__$("textFor" + fields[i].id).value.trim().match(fields[i].getAttribute("regex")) == null){
+            
+            __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
+            
+            incomplete = true;
+            
+          } else {
+            
+            __$("cell" + i + ".3").innerHTML = "<img src='" + imgTick + "' height=60 />";
+            
+          }
+          
+        } else {
+          if(__$("textFor" + fields[i].id).value.trim().length == 0){
+            
+            __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
+            
+            incomplete = true;
+            
+          } else if(fields[i].getAttribute("fieldtype") != null && fields[i].getAttribute("fieldtype").toLowerCase() == "number" && __$("textFor" + fields[i].id).value.trim().match(/^\d+$/) == null){
+          
+            __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
+            
+            incomplete = true;
+            
+          } else if(fields[i].getAttribute("fieldtype") != null && (fields[i].getAttribute("fieldtype").toLowerCase() == "date" || fields[i].getAttribute("fieldtype").toLowerCase() == "age")){
+          
+            if(__$("textFor" + fields[i].id).value.trim().match(/^\d+\/[A-Za-z]{3}\/\d{4}$/) == null){
+              
+              __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
+              
+              incomplete = true;
+              
+            } else {
+              
+              __$("cell" + i + ".3").innerHTML = "<img src='" + imgTick + "' height=60 />"
+            
+            }
+            
+          } else {
+            
+            __$("cell" + i + ".3").innerHTML = "<img src='" + imgTick + "' height=60 />"
+            
+          }
+        }
+      }
+    } else {
+      
+      if(__$("textFor" + fields[i].id)){
+        if(fields[i].getAttribute("regex") != null){
+          
+          if(__$("textFor" + fields[i].id).value.trim().length > 0){
+            if(__$("textFor" + fields[i].id).value.trim().match(fields[i].getAttribute("regex")) == null){
+              
+              __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
+            
+              incomplete = true;
+              
+            } else {
+              
+              __$("cell" + i + ".3").innerHTML = "<img src='" + imgTick + "' height=60 />"
+              
+            }
+          } else {
+            
+            __$("cell" + i + ".3").innerHTML = "&nbsp;";
+            
+          }
+          
+        } else {
+          if(__$("textFor" + fields[i].id).value.trim().length == 0){
+            
+            __$("cell" + i + ".3").innerHTML = "&nbsp;";
+            
+          } 
+        }
+      }
+      
+    }
+    
+  }
+  
+  validityTmr = setTimeout("checkValidity()", 500);
   
 }
 
