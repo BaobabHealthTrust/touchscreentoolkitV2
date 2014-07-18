@@ -1351,6 +1351,13 @@ function addCombo(parent, options, optionType, target1, target2, collapseOnClick
     
   }
   
+  var base = document.createElement("div");
+  base.style.width = "100%";
+  base.style.height = "360px";
+  base.style.overflow = "auto";
+  
+  parent.appendChild(base);
+  
   var ul = document.createElement("ul");
   ul.style.marginTop = "5px";
   ul.style.marginBottom = "5px";
@@ -1360,7 +1367,7 @@ function addCombo(parent, options, optionType, target1, target2, collapseOnClick
   
   ul.id = "ul" + (uls.length + 1);
   
-  parent.appendChild(ul);
+  base.appendChild(ul);
   
   var i = 0;
   
@@ -1466,6 +1473,10 @@ function actOnSingle(li, target1, target2){
         
         document.body.removeChild(__$("keyboard"));
     
+      } else if(this.getAttribute("action")!= null){
+                
+        eval(this.getAttribute("action"));        
+        
       }
     }
   }
@@ -1822,7 +1833,6 @@ function loadPage(section){
   
   var cell2_1 = document.createElement("div");
   cell2_1.style.display = "table-cell";
-  // cell2_1.style.border = "1px solid #000";
   cell2_1.style.height = "360px";
   
   row2.appendChild(cell2_1);
@@ -1831,7 +1841,6 @@ function loadPage(section){
   table.style.display = "table";
   table.style.width = "100%";
   table.style.height = "100%";
-  // table.style.border = "1px solid #000";
   
   cell2_1.appendChild(table);
   
@@ -1928,7 +1937,7 @@ function loadPage(section){
       
       btnCancel.onmousedown = function(){
         
-        if(cancelDestination != undefined){
+        if(typeof(cancelDestination) != "undefined"){
           
           window.location = cancelDestination;
           
@@ -2362,7 +2371,8 @@ function navigateTo(pos, section){
           
           __$("stage").style.verticalAlign = "top";
           
-          var combo = addCombo(__$("stage"), options, optionType, __$("textFor" + fields[pos].id), fields[pos], false, undefined, undefined, selected);
+          // addCombo(parent, options, optionType, target1, target2, collapseOnClick, id, action, selected)
+          var combo = addCombo(__$("stage"), options, optionType, __$("textFor" + fields[pos].id), fields[pos], false, (fields[pos].getAttribute("onchange") != null ? fields[pos].getAttribute("onchange") : undefined), undefined, selected);
           
           combo.style.fontSize = textSize;
           
@@ -2427,7 +2437,7 @@ function navigateTo(pos, section){
         
         __$("stage").style.verticalAlign = "top";
         
-        var combo = addCombo(__$("stage"), options, optionType, __$("textFor" + fields[pos].id), fields[pos], false, undefined, undefined, selected);
+        var combo = addCombo(__$("stage"), options, optionType, __$("textFor" + fields[pos].id), fields[pos], false, undefined, (fields[pos].getAttribute("onchange") != null ? fields[pos].getAttribute("onchange") : undefined), selected);
         
         combo.style.fontSize = textSize;
         
@@ -2640,7 +2650,7 @@ function checkChanges(id){
     
   }
   
-  setTimeout("checkChanges('" + id + "')", 500);
+  setTimeout("checkChanges('" + id + "')", 1000);
   
 }
 
@@ -2777,7 +2787,7 @@ function checkValidity(){
     }
   }
 
-  validityTmr = setTimeout("checkValidity()", 500);
+  validityTmr = setTimeout("checkValidity()", 1000);
   
 }
 
