@@ -1,0 +1,58 @@
+<!DOCTYPE=html>
+<html>
+	<head>
+		<title>Choices</title>
+	</head>
+	<body>
+		<form>
+			<fieldset>
+				
+				<legend>Conditional Statements Example</legend>
+				<label for="question1">Would you want to go to an ART Clinic?</label>
+				<label for="choice1.0">Yes</label>
+				<input type="radio" name="question1" id="choice1.0" value="yes"/>
+				<label for="choice1.1">No</label>
+				<input type="radio" name="question1" id="choice1.1" value="no"/>
+				
+				<br />
+				<label for="book">Would you want to be booked?</label>
+				<label for="choice2.0">Yes</label>
+				<input type="radio" name="book" id="choice2.0" value="yes" condition="__$('choice1.0').checked"/>
+				<label for="choice2.1">No</label>
+				<input type="radio" name="book" id="choice2.1" value="no" condition="__$('choice1.0').checked"/>
+				
+				<br />
+				<label for="clinic">Choose convenient ART clinic</label>
+				<select id="clinic" condition="__$('choice1.0').checked && __$('choice2.0').checked">
+					<option></option>
+					<option>Lighthouse Trust</option>
+					<option>Bwaila Clinic</option>
+					<option>Area 18 Health Centre</option>
+				</select>				
+				
+				<br />
+				<label for="days">Choose date from these</label>
+				<select id="days" condition="__$('choice1.0').checked && __$('choice2.0').checked && __$('clinic').value.trim().length > 0;">
+					<option></option>
+					<option>1 July, 2014</option>
+					<option>8 July, 2014</option>
+					<option>13 July, 2014</option>
+				</select>		
+				
+			</fieldset>
+			<fieldset>
+				<legend>Demographics:</legend>
+				<label for="gender">Gender:</label> 
+				<select id="gender">
+					<option></option>
+					<option value="F">Female</option>
+					<option value="M">Male</option>
+				</select>
+				<br>
+				<label for="dob">Date of birth:</label> 
+				<input id="dob" type="text" value="" fieldtype="age" />
+			</fieldset>		
+		</form>
+		<script src="../ts.js"></script>
+	</body>
+</html>

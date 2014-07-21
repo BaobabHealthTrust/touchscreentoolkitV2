@@ -145,11 +145,7 @@ function showFixedKeyboard(ctrl, container, disabled, numbers, caps){
     var div = document.createElement('div');
     div.id = 'fixedkeyboard';
     div.style.margin = 'auto';
-    // div.style.border = '1px solid #5ca6c4';
     div.style.borderRadius = '10px';
-    // div.style.left = pos[3] + 'px';
-    // div.style.top = (pos[2] + pos[1] + 2 - window.scrollY) + 'px';
-    // div.style.zIndex = '1000';
     div.style.backgroundColor = 'rgba(255,255,255,0.8)';
     
     container.appendChild(div);
@@ -375,7 +371,7 @@ function showKeyboard(ctrl, disabled, numbers, caps){
         
         if(currentKeysNumeric){
          
-          keys = [[1,2,3,':'],[4,5,6,'/'],[7,8,9,'.'],['&larr;',0,'','abc']];
+          keys = [[1,2,3,':'],[4,5,6,'/'],[7,8,9,'.'],['&larr;',0,'?','abc']];
           
         } else {
          
@@ -478,6 +474,10 @@ function showKeyboard(ctrl, disabled, numbers, caps){
                             
                             showKeyboard(__$(target.id), {}, currentKeysNumeric, currentCaseUpper);
                             
+                        } else if(this.innerHTML.trim() == '?'){
+                          
+                          target.value = "?";
+                          
                         } else if(this.innerHTML.trim().toLowerCase() == 'cap'){
                             currentCaseUpper = !currentCaseUpper;
                             
@@ -507,13 +507,29 @@ function showKeyboard(ctrl, disabled, numbers, caps){
                            
                         } else {
                         
-                            target.value += (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+                            if(target.value.trim() == "?" || target.value.trim() == "Unknown"){
+                              
+                              target.value = (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+                              
+                            } else {
+                              
+                              target.value += (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+                              
+                            }
                             
                         }
                         
                         __$('.').setAttribute('class', 'button blue');
                         
                     }
+                }
+                
+                
+                if(String(keys[i][j]).trim() == "Unknown"){
+                  
+                  button.style.fontSize = "14px";
+                  cell.style.marginTop = "-10px";
+                  
                 }
                 
                 cell.appendChild(button);
@@ -770,7 +786,6 @@ function addAge(parent, target, date, label1, label2){
   tbl.style.borderSpacing = "5px";
   tbl.style.margin = "auto";
 
-  // tbl.style.border = "1px solid #3465a4";
   tbl.style.borderRadius = "10px";
 
   parent.appendChild(tbl);
@@ -874,21 +889,29 @@ function addDate(parent, target, date){
     return;
   }  
   
+  var currentdate;
+  
   if(date == undefined || date == null || date.trim().length == 0){
   
-    if(target.value.trim().match(/^(\d|\d{2})\/[A-Za-z]{3}\/\d{4}$/)){
-      var currentdate = target.value.trim().split("/");
+    if(target.value.trim().match(/^(\d|\d{2}|\?)\/([A-Za-z]{3}|\?)\/(\d{4}|\?)$/)){
+      currentdate = target.value.trim().split("/");
       
       date = new Date(currentdate[2] + "-" + padZeros((monthNames[currentdate[1]] + 1), 2) + "-" + padZeros(parseInt(currentdate[0]), 2));
     } else {
-      var today = new Date();
       
-      date = today.getFullYear() + "-" + padZeros(today.getMonth(), 2) + "-" + padZeros(today.getDate(), 2);
+      date = new Date();
+      
     }
   
-  } 
+  } else if(target.value.trim().match(/^(\d|\d{2}|\?)\/([A-Za-z]{3}|\?)\/(\d{4}|\?)$/)){
+    currentdate = target.value.trim().split("/");
+    
+    date = new Date(currentdate[2] + "-" + padZeros((monthNames[currentdate[1]] + 1), 2) + "-" + padZeros(parseInt(currentdate[0]), 2));
+  } else {
   
-  date = new Date(date);
+    date = new Date(date);
+  
+  }
   
   var tbl = document.createElement("div");
   tbl.style.display = "table";
@@ -931,28 +954,28 @@ function addDate(parent, target, date){
           "type"  : "input",
           "id"    : "txtYearFor" + target.id,
           "target": target.id,
-          "value" : date.getFullYear(),
-          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showKeyboard(__$('txtYearFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
+          "value" : (!isNaN(date.getFullYear()) ? date.getFullYear() : (currentdate.length == 3 ? currentdate[2] : "?")),
+          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtYearFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center;"
+          "style" : "font-size: 32px; text-align: center; width: 100%;"
         },
         {
           "type"  : "input",
           "id"    : "txtMonthFor" + target.id,
           "target": target.id,
-          "value" : months[date.getMonth()],
-          "onmousedown" : "addList(__$('txtMonthFor' + this.getAttribute('target')),{'Jan':'January','Feb':'February','Mar':'March','Apr':'April','May':'May','Jun':'June','Jul':'July','Aug':'August','Sep':'September','Oct':'October','Nov':'November','Dec':'December'},'single',__$('txtMonthFor' + this.getAttribute('target')),__$('txtMonthFor' + this.getAttribute('target')), 'checkDate(\"' + this.getAttribute('target') + '\")'); checkDate(this.getAttribute('target'));",
+          "value" : (typeof(months[date.getMonth()]) != "undefined" ? months[date.getMonth()] : (currentdate.length == 3 ? currentdate[1] : "?")),
+          "onmousedown" : "showShield(); addList(__$('txtMonthFor' + this.getAttribute('target')),{'Jan':'January','Feb':'February','Mar':'March','Apr':'April','May':'May','Jun':'June','Jul':'July','Aug':'August','Sep':'September','Oct':'October','Nov':'November','Dec':'December','?':'Unknown'},'single',__$('txtMonthFor' + this.getAttribute('target')),__$('txtMonthFor' + this.getAttribute('target')), 'checkDate(\"' + this.getAttribute('target') + '\")'); checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center;"
+          "style" : "font-size: 32px; text-align: center; width: 100%;"
         },
         {
           "type"  : "input",
           "id"    : "txtDateFor" + target.id,
           "target": target.id,
-          "value" : date.getDate(),
-          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showKeyboard(__$('txtDateFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
+          "value" : (!isNaN(date.getDate()) ? date.getDate() : (currentdate.length == 3 ? currentdate[0] : "?")),
+          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtDateFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center;"
+          "style" : "font-size: 32px; text-align: center; width: 100%;"
         }
       ],
       [
@@ -1132,10 +1155,68 @@ function checkDate(id, byAge){
     
       if(!__$("txtYearFor" + id).value.trim().match(/^\d{4}$/)){
       
-        __$("txtYearFor" + id).value = (new Date()).getFullYear();
+        __$("txtYearFor" + id).value = "?";
+        
+        __$("txtMonthFor" + id).value = "?";
+        
+        __$("txtDateFor" + id).value = "?";
+                  
+        if(__$(id)){
+          
+          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+          
+        }
+
+        if(__$("age" + id)){
+            
+          __$("age" + id).value = "";
+        
+        }
+        
+        return;
         
       }
     
+      if(__$("txtMonthFor" + id).value.trim() == "?"){
+        
+        __$("txtMonthFor" + id).value = "?";
+        
+        __$("txtDateFor" + id).value = "?";
+                  
+        if(__$(id)){
+          
+          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+          
+        }
+
+        if(__$("age" + id)){
+          
+          var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
+          
+          var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+                  
+          __$("age" + id).value = Math.round(age);
+        
+        }
+        
+        return;
+        
+      }
+    
+      if(__$("txtDateFor" + id).value.trim() == "?"){
+        
+        __$("txtDateFor" + id).value = "?";
+          
+        if(__$(id)){
+          
+          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+          
+        }
+      
+        return;
+        
+      }
+      
       var value = parseInt(__$("txtDateFor" + id).value.trim());
         
       var month = monthNames[__$("txtMonthFor" + id).value.trim()];
@@ -1167,7 +1248,7 @@ function checkDate(id, byAge){
         var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((month - 1 < 1 ? 12 : (month - 1)), 2) + "-" + padZeros(parseInt(__$("txtDateFor" + id).value.trim()), 2);
         
         var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
-        
+                
         __$("age" + id).value = Math.round(age);
       
       }
@@ -1178,14 +1259,25 @@ function checkDate(id, byAge){
         
         var age = parseInt(__$("age" + id).value);
         
-        var yrs = (new Date()).getFullYear() - age;
-        
-        __$("txtYearFor" + id).value = yrs;
-        
-        __$("txtMonthFor" + id).value = "Jul";
-        
-        __$("txtDateFor" + id).value = "15";
-        
+        if(!isNaN(age)){
+          
+          var yrs = (new Date()).getFullYear() - age;
+          
+          __$("txtYearFor" + id).value = yrs;
+          
+          __$("txtMonthFor" + id).value = "?";
+          
+          __$("txtDateFor" + id).value = "?";
+          
+        } else {
+            
+          __$("txtYearFor" + id).value = "?";
+          
+          __$("txtMonthFor" + id).value = "?";
+          
+          __$("txtDateFor" + id).value = "?";
+                   
+        }
       }
        
       if(__$(id)){
@@ -1281,7 +1373,7 @@ function addList(parent, options, optionType, target1, target2, action){
       list.style.border = "1px solid #999";
       list.style.boxShadow = "inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC";
       list.style.width = "200px";
-      list.style.height = "250px";
+      list.style.height = "365px";
       list.id = "keyboard";
       list.style.left = (pos[3]) + "px";
       list.style.top = (pos[2] + pos[1]) + "px";
@@ -1353,7 +1445,7 @@ function addCombo(parent, options, optionType, target1, target2, collapseOnClick
   
   var base = document.createElement("div");
   base.style.width = "100%";
-  base.style.height = "360px";
+  base.style.height = "348px";
   base.style.overflow = "auto";
   
   parent.appendChild(base);
@@ -1472,6 +1564,8 @@ function actOnSingle(li, target1, target2){
         eval(this.getAttribute("action"));
         
         document.body.removeChild(__$("keyboard"));
+    
+        showShield();
     
       } else if(this.getAttribute("action")!= null){
                 
@@ -2169,6 +2263,28 @@ function navigateTo(pos, section){
   
   var fields = fieldsets[section].elements;
   
+  if(fields[pos].getAttribute("disabled") != null){
+    
+    if(incomplete)
+      return;
+    
+    if((pos + 1) < fields.length -1){
+      
+      navigateTo(pos + 1, section);
+      
+    } else if(section + 1 < fieldsets.length){
+        
+      loadPage(section + 1);      
+      
+    } else {
+      
+      document.forms[0].submit();
+      
+    }
+    
+    return;
+  }
+  
   var fieldtype = fields[pos].getAttribute("fieldtype");
   
   if(!__$("cursor")){
@@ -2184,6 +2300,12 @@ function navigateTo(pos, section){
   if(__$("cell" + pos + ".1")){
     
     __$("cell" + pos + ".1").appendChild(__$("cursor"));
+    
+  }
+  
+  if(__$("stage")){
+    
+    __$("stage").innerHTML = "&nbsp;";
     
   }
   
@@ -2237,7 +2359,23 @@ function navigateTo(pos, section){
     }
         
     if(btnBack != null){
-            
+                     
+      if(fields[pos - 1]){
+        if(fields[pos - 1].type == "radio"){
+          var radios = document.getElementsByName(fields[pos - 1].name);
+                
+          btnBack.setAttribute("step", radios.length);
+        } else {
+          
+          btnBack.removeAttribute("step");
+          
+        }
+      } else {
+        
+        btnBack.removeAttribute("step");
+        
+      }
+      
       btnBack.setAttribute("pos", pos);
       
       btnBack.setAttribute("section", section);      
@@ -2248,7 +2386,9 @@ function navigateTo(pos, section){
         
         btnBack.onmousedown = function(){
                     
-          var pos = parseInt(this.getAttribute("pos")) - 1;
+          // var pos = parseInt(this.getAttribute("pos")) - 1;
+          
+          var pos = parseInt(this.getAttribute("pos")) - (this.getAttribute("step") != null ? parseInt(this.getAttribute("step")) : 1);
           
           var section = parseInt(this.getAttribute("section"));
           
@@ -2664,14 +2804,88 @@ function checkValidity(){
   
   for(var i = 0; i < fields.length; i++){
     
+    if(fields[i].getAttribute("condition") != null){
+      
+      if(!eval(fields[i].getAttribute("condition"))){
+        
+        if(__$("textFor" + fields[i].id)){
+          
+          __$("textFor" + fields[i].id).value = "";
+          
+          fields[i].id.value = "";
+          
+          __$("textFor" + fields[i].id).setAttribute("disabled", true);
+                    
+        } else if(fields[i].type == "radio"){
+        
+          fields[i].checked = false;
+          
+          if(__$("btn" + fields[i].id)){
+            
+            __$("btn" + fields[i].id).setAttribute("disabled", true);
+            
+            __$("btn" + fields[i].id).className = "button gray";
+            
+          }
+            
+        }
+               
+        if(__$("cell" + i + ".0")){
+          
+          __$("cell" + i + ".0").style.opacity = "0.4";
+          
+        }
+                
+        fields[i].setAttribute("disabled", true);
+          
+      } else {
+        
+        if(__$("textFor" + fields[i].id)){
+          
+          __$("textFor" + fields[i].id).removeAttribute("disabled");
+          
+        } else if(fields[i].type == "radio"){
+        
+          if(__$("btn" + fields[i].id) && __$("btn" + fields[i].id).getAttribute("disabled")){
+            
+            __$("btn" + fields[i].id).removeAttribute("disabled");
+            
+            __$("btn" + fields[i].id).className = "button blue";
+            
+          }
+            
+        }
+              
+        if(__$("cell" + i + ".0")){
+          
+          __$("cell" + i + ".0").style.opacity = "1";
+          
+        }
+            
+        fields[i].removeAttribute("disabled");            
+        
+      }
+      
+    }
+    
     if(fields[i].type == "radio"){
       
       var radios = document.getElementsByName(fields[i].name);
       
       var checked = false;
       
+      var disabled = false;
+      
       for(var j = 0; j < radios.length; j++){
         
+        if(radios[j].getAttribute("disabled") != null){
+          
+          disabled = true;
+          
+          break;
+          
+        }
+          
         if(radios[j].checked){
           
           checked = true;
@@ -2682,7 +2896,7 @@ function checkValidity(){
         
       }
       
-      if(__$("cell" + i + ".3")){
+      if(__$("cell" + i + ".3") && !disabled){
         if(!checked){
           
           __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
@@ -2694,6 +2908,10 @@ function checkValidity(){
           __$("cell" + i + ".3").innerHTML = "<img src='" + imgTick + "' height=60 />";              
           
         }
+      } else if(__$("cell" + i + ".3")){
+        
+        __$("cell" + i + ".3").innerHTML = "";
+        
       }
     
       // i = i + radios.length - 1;
@@ -2701,7 +2919,7 @@ function checkValidity(){
     } else {
       
       if(fields[i].getAttribute("optional") == null){
-        if(__$("textFor" + fields[i].id)){
+        if(fields[i].getAttribute("disabled") == null && __$("textFor" + fields[i].id)){
           if(fields[i].getAttribute("regex") != null){
             
             if(__$("textFor" + fields[i].id).value.trim().match(fields[i].getAttribute("regex")) == null){
@@ -2731,7 +2949,7 @@ function checkValidity(){
               
             } else if(fields[i].getAttribute("fieldtype") != null && (fields[i].getAttribute("fieldtype").toLowerCase() == "date" || fields[i].getAttribute("fieldtype").toLowerCase() == "age")){
             
-              if(__$("textFor" + fields[i].id).value.trim().match(/^\d+\/[A-Za-z]{3}\/\d{4}$/) == null){
+              if(__$("textFor" + fields[i].id).value.trim().match(/^(\d|\d{2}|\?)\/([A-Za-z]{3}|\?)\/(\d{4}|\?)$/) == null){
                 
                 __$("cell" + i + ".3").innerHTML = "<img src='" + imgUnTick + "' height=60 />";
                 
@@ -2749,10 +2967,15 @@ function checkValidity(){
               
             }
           }
+        } else if(__$("cell" + i + ".3")) {
+        
+          __$("cell" + i + ".3").innerHTML = "";
+          
         }
+        
       } else {
         
-        if(__$("textFor" + fields[i].id)){
+        if(fields[i].getAttribute("disabled") == null && __$("textFor" + fields[i].id)){
           if(fields[i].getAttribute("regex") != null){
             
             if(__$("textFor" + fields[i].id).value.trim().length > 0){
@@ -2780,6 +3003,10 @@ function checkValidity(){
               
             } 
           }
+        } else if(__$("cell" + i + ".3")) {
+        
+          __$("cell" + i + ".3").innerHTML = "";
+          
         }
         
       }
@@ -2787,7 +3014,42 @@ function checkValidity(){
     }
   }
 
-  validityTmr = setTimeout("checkValidity()", 1000);
+  validityTmr = setTimeout("checkValidity()", 500);
+  
+}
+
+function showShield(){
+  
+  if(__$("shield")){
+    
+    if(__$("keyboard")){
+      
+      document.body.removeChild(__$('keyboard'));
+      
+    }
+    
+    document.body.removeChild(__$("shield"));
+    
+  } else {
+    
+    var shield = document.createElement("div");
+    shield.style.position = "absolute";
+    shield.style.backgroundColor = "rgba(0,0,0,0.5)";
+    shield.style.top = "0px";
+    shield.style.left = "0px";
+    shield.style.width = "100%";
+    shield.style.height = "100%";
+    shield.id = "shield";
+    
+    shield.onclick = function(){
+      
+      showShield();
+      
+    }
+    
+    document.body.appendChild(shield);
+    
+  }
   
 }
 
