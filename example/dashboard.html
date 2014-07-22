@@ -1,0 +1,49 @@
+<!DOCTYPE=HTML>
+<html>
+	<head>
+		<title>Patient Dashboard</title>
+	</head>
+	<body>
+		
+		<div id="home">
+			
+			<div id="patient-card">
+				
+				<input type="text" id="gender" value="F" />
+				
+				<input type="text" id="name" value="Jane Doe" />
+				
+				<input type="text" id="accession_number" value="0001" />
+				
+				<input type="text" id="age" value="34" />
+				
+				<input type="text" id="residence" value="Area 9" />
+				
+				<input type="text" id="workflow-status" value="In session" />
+				
+			</div>
+			
+			<div id="buttons">
+				
+				<button onmousedown="window.location = '/finish'">Finish</button>
+				
+				<button onmousedown="window.location = '/cancel'">Cancel</button>
+				
+				<button onmousedown="window.location = '/demographics'">Demographics</button>
+				
+				<button onmousedown="window.location = '/counseling'">Counseling Protocol</button>
+				
+				<button onmousedown="window.location = '/hiv'">HIV Testing Protocol</button>
+				
+			</div>
+			
+			<select id="tabs">
+				<option value="current_visit.html">Current Visit</option>
+				<option value="previous_visit.html">Previous Visit</option>
+			</select>
+			
+		</div>
+		
+		<script src="../dashboard.js"></script>
+	</body>
+</html>
