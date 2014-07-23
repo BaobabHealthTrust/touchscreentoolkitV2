@@ -1,0 +1,192 @@
+<!DOCTYPE=html>
+<html>
+	<head>
+		<title>Current Visit</title>
+		<style>
+			.arrow-right {
+				width: 0; 
+				height: 0; 
+				border-top: 250px solid transparent; 
+				border-left: 60px solid #ccc; 
+				border-bottom: 250px solid transparent;
+				cursor: pointer;
+			}
+			
+			.arrow-left {
+				width: 0; 
+				height: 0; 
+				border-top: 250px solid transparent; 
+				border-right: 60px solid #ccc; 
+				border-bottom: 250px solid transparent;
+				cursor: pointer;
+			}
+			
+			.arrow-left:hover{
+				border-right: 60px solid #999; 
+			}
+			
+			.arrow-right:hover{
+				border-left: 60px solid #999; 
+			}
+		</style>
+	</head>
+	<body style="margin: 10px; overflow: auto; font-family: Helvetica;">
+		<div style="display: table; width: 100%; border: 1px solid #eee; height: 99%;">
+			<div style="display: table-row;">
+				<div style="display: table-cell; vertical-align: middle; padding-left: 30px; width: 100px;">
+					
+					<div class="arrow-left" onmousedown="window.parent.clickPrevious()">					
+					</div>
+					
+				</div>
+				<div style="display: table-cell; vertical-align: middle;">
+					
+					<div style=" margin: auto; margin-bottom: 40px; width: 350px;">
+						<label style="color: #5679c1; font-weight: normal; font-size: 28px;">Today's Visit Details</label>
+					</div>
+					
+					<div style="display: table; margin: auto;">
+						<div style="display: table-row;">
+							<div style="display: table-cell;">
+								<label style="color: #5679c1; font-weight: bold; font-size: 20px;">Current Client's States Summary</label>
+								
+								<div style="display: table; border: 1px solid #5679c1; font-size: 14px;">
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; font-weight: bold; padding: 10px;">
+											First State Time
+										</div> 
+										<div style="display: table; border-bottom: 1px dotted #5679c1; border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 180px;">
+											09:59
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; font-weight: bold; padding: 10px;">
+											Current State
+										</div> 
+										<div style="display: table; border-bottom: 1px dotted #5679c1; border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px;">
+											In Session
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; font-weight: bold; padding: 10px;">
+											Current State Start
+										</div> 
+										<div style="display: table; border-bottom: 1px dotted #5679c1; border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px;">
+											10:59
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1;  font-weight: bold; padding: 10px;">
+											Final State Time
+										</div> 
+										<div style="display: table; border-bottom: 1px dotted #5679c1;  border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1;  padding: 10px;">
+											--:--
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1;  font-weight: bold; padding: 10px;">
+											&nbsp;
+										</div> 
+										<div style="display: table; border-bottom: 1px dotted #5679c1;  border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1;  padding: 10px;">
+											&nbsp;
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; font-weight: bold; padding: 10px;">
+											&nbsp;
+										</div> 
+										<div style="display: table; border-right: 1px solid #5679c1; padding: 10px; font-weight: bold;">
+											:
+										</div>
+										<div style="display: table-cell; padding: 10px;">
+											&nbsp;
+										</div> 
+									</div>
+								</div>
+							</div>
+							<div style="display: table-cell; width: 100px;">
+								&nbsp;
+							</div>
+							<div style="display: table-cell;">
+								<label style="color: #5679c1; font-weight: bold; font-size: 20px;">Current Client's States Log</label>
+								
+								<div style="display: table; border: 1px solid #5679c1; font-size: 14px;">
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											09:59
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											Seen at reception
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											10:15
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											Waiting
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											10:30
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											Counseling advice conducted
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											10:50
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											HIV testing
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											10:59
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											Referral confirmation started
+										</div> 
+									</div>
+									<div style="display: table-row;">
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; border-right: 1px solid #5679c1;">
+											&nbsp;
+										</div> 
+										<div style="display: table-cell; border-bottom: 1px dotted #5679c1; padding: 10px; width: 250px;">
+											&nbsp;
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div style="display: table-cell; vertical-align: middle; padding-right: 30px; width: 100px; text-align: right;">
+					
+					<div class="arrow-right" style="float: right;" onmousedown="window.parent.clickNext()">					
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
