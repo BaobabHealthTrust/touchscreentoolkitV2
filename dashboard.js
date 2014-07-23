@@ -614,7 +614,7 @@ function createPage(fieldset){
 								var elements = document.getElementsByClassName('clicked'); 
 								
 								for(var i = 0; i < elements.length; i++){
-									elements[i].className = 'cell normal'
+									elements[i].className = 'cell normal tab'
 								}; 
 								
 								this.className = 'cell clicked tab';
