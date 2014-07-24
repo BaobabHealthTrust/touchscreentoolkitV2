@@ -15,7 +15,7 @@ var imgTick = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmH
       
 var imgUnTick = 'data:image/png;base64,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';
       
-var styles = "body {-moz-user-select: none; overflow: hidden; font-family: 'Nimbus Sans L', 'Arial Narrow', sans-serif; min-width: 1250px; min-height: 700px; } .button:active {border:1px solid #5ca6c4 !important;background-color: #82bbd1 !important; background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#cd8912)) !important;background-image: -webkit-linear-gradient(top, #82bbd1, #cd8912) !important;background-image: -moz-linear-gradient(top, #efb144, #cd8912) !important;background-image: -ms-linear-gradient(top, #efb144, #cd8912) !important;background-image: -o-linear-gradient(top, #efb144, #cd8912) !important;background-image: linear-gradient(to bottom, #efb144, #cd8912) !important;filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#efb144, endColorstr=#cd8912) !important;} .input_cell {font-size: 1.2em;padding: 10px;border: 1px solid #3465a4;border-radius: 10px;width: 80%;}button {font-size: 1em;padding: 15px;min-width: 120px;cursor: pointer;min-height: 75px;border-radius: 10px !important;margin: 3px;}.button {font-size: 1em;padding: 15px;min-width: 120px;cursor: pointer;min-height: 75px;border-radius: 10px !important;margin: 3px;}.blue{border:1px solid #7eb9d0; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);background-image: -o-linear-gradient(top, #a7cfdf, #23538a);background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);}.blue:hover{border:1px solid #5ca6c4;background-color: #82bbd1; background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61));background-image: -webkit-linear-gradient(top, #82bbd1, #193b61);background-image: -moz-linear-gradient(top, #82bbd1, #193b61);background-image: -ms-linear-gradient(top, #82bbd1, #193b61);background-image: -o-linear-gradient(top, #82bbd1, #193b61);background-image: linear-gradient(to bottom, #82bbd1, #193b61);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#82bbd1, endColorstr=#193b61);}.green{border:1px solid #34740e; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #4ba614; background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));background-image: -webkit-linear-gradient(top, #4ba614, #008c00);background-image: -moz-linear-gradient(top, #4ba614, #008c00);background-image: -ms-linear-gradient(top, #4ba614, #008c00);background-image: -o-linear-gradient(top, #4ba614, #008c00);background-image: linear-gradient(to bottom, #4ba614, #008c00);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#4ba614, endColorstr=#008c00);}.green:hover{border:1px solid #224b09;background-color: #36780f; background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));background-image: -webkit-linear-gradient(top, #36780f, #005900);background-image: -moz-linear-gradient(top, #36780f, #005900);background-image: -ms-linear-gradient(top, #36780f, #005900);background-image: -o-linear-gradient(top, #36780f, #005900);background-image: linear-gradient(to bottom, #36780f, #005900);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#36780f, endColorstr=#005900);}.red{border:1px solid #72021c; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #a90329; background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));background-image: -webkit-linear-gradient(top, #a90329, #6d0019);background-image: -moz-linear-gradient(top, #a90329, #6d0019);background-image: -ms-linear-gradient(top, #a90329, #6d0019);background-image: -o-linear-gradient(top, #a90329, #6d0019);background-image: linear-gradient(to bottom, #a90329, #6d0019);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a90329, endColorstr=#6d0019);}.red:hover{border:1px solid #450111;background-color: #77021d; background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d));background-image: -webkit-linear-gradient(top, #77021d, #3a000d);background-image: -moz-linear-gradient(top, #77021d, #3a000d);background-image: -ms-linear-gradient(top, #77021d, #3a000d);background-image: -o-linear-gradient(top, #77021d, #3a000d);background-image: linear-gradient(to bottom, #77021d, #3a000d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#77021d, endColorstr=#3a000d);}.gray{border:1px solid #ccc; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #ccc; background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));background-image: -webkit-linear-gradient(top, #ccc, #999);background-image: -moz-linear-gradient(top, #ccc, #999);background-image: -ms-linear-gradient(top, #ccc, #999);background-image: -o-linear-gradient(top, #ccc, #999);background-image: linear-gradient(to bottom, #ccc, #999);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ccc, endColorstr=#999);}.gray:hover{border:1px solid #ccc;background-color: #ddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc));background-image: -webkit-linear-gradient(top, #333, #ccc);background-image: -moz-linear-gradient(top, #333, #ccc);background-image: -ms-linear-gradient(top, #333, #ccc);background-image: -o-linear-gradient(top, #333, #ccc);background-image: linear-gradient(to bottom, #333, #ccc);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#333, endColorstr=#ccc);}.orange{border:1px solid #ef8544; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #ef8544; background-image: -webkit-gradient(linear, left top, left bottom, from(#ef8544), to(#efb144));background-image: -webkit-linear-gradient(top, #ef8544, #efb144);background-image: -moz-linear-gradient(top, #ef8544, #efb144);background-image: -ms-linear-gradient(top, #ef8544, #efb144);background-image: -o-linear-gradient(top, #ef8544, #efb144);background-image: linear-gradient(to bottom, #ef8544, #efb144);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ef8544, endColorstr=#efb144);}.orange:hover{border:1px solid #ef8544;background-color: #ddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff420e), to(#ef8544));background-image: -webkit-linear-gradient(top, #ff420e, #ef8544);background-image: -moz-linear-gradient(top, #ff420e, #ef8544);background-image: -ms-linear-gradient(top, #ff420e, #ef8544);background-image: -o-linear-gradient(top, #ff420e, #ef8544);background-image: linear-gradient(to bottom, #ff420e, #ef8544);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ff420e, endColorstr=#ef8544);}"
+var styles = "body {-moz-user-select: none; overflow: hidden; font-family: 'Nimbus Sans L', 'Arial Narrow', sans-serif; min-width: 1250px; min-height: 700px; } .button:active {border:1px solid #5ca6c4 !important;background-color: #82bbd1 !important; background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#cd8912)) !important;background-image: -webkit-linear-gradient(top, #82bbd1, #cd8912) !important;background-image: -moz-linear-gradient(top, #efb144, #cd8912) !important;background-image: -ms-linear-gradient(top, #efb144, #cd8912) !important;background-image: -o-linear-gradient(top, #efb144, #cd8912) !important;background-image: linear-gradient(to bottom, #efb144, #cd8912) !important;filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#efb144, endColorstr=#cd8912) !important;} .input_cell {font-size: 1.2em;padding: 10px;border: 1px solid #3465a4;border-radius: 10px;width: 80%;}button {font-size: 1em;padding: 15px;min-width: 120px;cursor: pointer;min-height: 75px;border-radius: 10px !important;margin: 3px;}.button {font-size: 1em;padding: 15px;min-width: 100px;  cursor: pointer;  min-height: 60px;border-radius: 10px !important;margin: 3px;}.blue{border:1px solid #7eb9d0; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);background-image: -o-linear-gradient(top, #a7cfdf, #23538a);background-image: linear-gradient(to bottom, #a7cfdf, #23538a);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);}.blue:hover{border:1px solid #5ca6c4;background-color: #82bbd1; background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61));background-image: -webkit-linear-gradient(top, #82bbd1, #193b61);background-image: -moz-linear-gradient(top, #82bbd1, #193b61);background-image: -ms-linear-gradient(top, #82bbd1, #193b61);background-image: -o-linear-gradient(top, #82bbd1, #193b61);background-image: linear-gradient(to bottom, #82bbd1, #193b61);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#82bbd1, endColorstr=#193b61);}.green{border:1px solid #34740e; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #4ba614; background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));background-image: -webkit-linear-gradient(top, #4ba614, #008c00);background-image: -moz-linear-gradient(top, #4ba614, #008c00);background-image: -ms-linear-gradient(top, #4ba614, #008c00);background-image: -o-linear-gradient(top, #4ba614, #008c00);background-image: linear-gradient(to bottom, #4ba614, #008c00);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#4ba614, endColorstr=#008c00);}.green:hover{border:1px solid #224b09;background-color: #36780f; background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));background-image: -webkit-linear-gradient(top, #36780f, #005900);background-image: -moz-linear-gradient(top, #36780f, #005900);background-image: -ms-linear-gradient(top, #36780f, #005900);background-image: -o-linear-gradient(top, #36780f, #005900);background-image: linear-gradient(to bottom, #36780f, #005900);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#36780f, endColorstr=#005900);}.red{border:1px solid #72021c; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #a90329; background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));background-image: -webkit-linear-gradient(top, #a90329, #6d0019);background-image: -moz-linear-gradient(top, #a90329, #6d0019);background-image: -ms-linear-gradient(top, #a90329, #6d0019);background-image: -o-linear-gradient(top, #a90329, #6d0019);background-image: linear-gradient(to bottom, #a90329, #6d0019);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a90329, endColorstr=#6d0019);}.red:hover{border:1px solid #450111;background-color: #77021d; background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d));background-image: -webkit-linear-gradient(top, #77021d, #3a000d);background-image: -moz-linear-gradient(top, #77021d, #3a000d);background-image: -ms-linear-gradient(top, #77021d, #3a000d);background-image: -o-linear-gradient(top, #77021d, #3a000d);background-image: linear-gradient(to bottom, #77021d, #3a000d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#77021d, endColorstr=#3a000d);}.gray{border:1px solid #ccc; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #ccc; background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));background-image: -webkit-linear-gradient(top, #ccc, #999);background-image: -moz-linear-gradient(top, #ccc, #999);background-image: -ms-linear-gradient(top, #ccc, #999);background-image: -o-linear-gradient(top, #ccc, #999);background-image: linear-gradient(to bottom, #ccc, #999);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ccc, endColorstr=#999);}.gray:hover{border:1px solid #ccc;background-color: #ddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc));background-image: -webkit-linear-gradient(top, #333, #ccc);background-image: -moz-linear-gradient(top, #333, #ccc);background-image: -ms-linear-gradient(top, #333, #ccc);background-image: -o-linear-gradient(top, #333, #ccc);background-image: linear-gradient(to bottom, #333, #ccc);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#333, endColorstr=#ccc);}.orange{border:1px solid #ef8544; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:28px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;background-color: #ef8544; background-image: -webkit-gradient(linear, left top, left bottom, from(#ef8544), to(#efb144));background-image: -webkit-linear-gradient(top, #ef8544, #efb144);background-image: -moz-linear-gradient(top, #ef8544, #efb144);background-image: -ms-linear-gradient(top, #ef8544, #efb144);background-image: -o-linear-gradient(top, #ef8544, #efb144);background-image: linear-gradient(to bottom, #ef8544, #efb144);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ef8544, endColorstr=#efb144);}.orange:hover{border:1px solid #ef8544;background-color: #ddd; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff420e), to(#ef8544));background-image: -webkit-linear-gradient(top, #ff420e, #ef8544);background-image: -moz-linear-gradient(top, #ff420e, #ef8544);background-image: -ms-linear-gradient(top, #ff420e, #ef8544);background-image: -o-linear-gradient(top, #ff420e, #ef8544);background-image: linear-gradient(to bottom, #ff420e, #ef8544);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ff420e, endColorstr=#ef8544);}"
         
 var currentCaseUpper = true;
 var currentKeysNumeric = false;
@@ -198,11 +198,12 @@ function showFixedKeyboard(ctrl, container, disabled, numbers, caps){
             
             var button = document.createElement('button');
             button.setAttribute('class', (disabled[keys[i][j]] ? 'button gray' : 'button blue'));
-            button.style.width = '75px';
-            button.style.height = '70px';
+            button.style.width = '65px';
+            button.style.height = '60px';
             button.style.minWidth = '40px';
             button.style.minHeight = '40px';
             button.style.margin = '2px';
+            button.style.fontSize = "24px";
             
             button.id = keys[i][j];
             
@@ -415,11 +416,12 @@ function showKeyboard(ctrl, disabled, numbers, caps){
                 
                 var button = document.createElement('button');
                 button.setAttribute('class', (disabled[keys[i][j]] ? 'button gray' : 'button blue'));
-                button.style.width = '75px';
-                button.style.height = '70px';
-                button.style.minWidth = '40px';
-                button.style.minHeight = '40px';
-                button.style.margin = '2px';
+				button.style.width = '65px';
+				button.style.height = '60px';
+				button.style.minWidth = '40px';
+				button.style.minHeight = '40px';
+				button.style.margin = '2px';
+				button.style.fontSize = "24px";
                 
                 button.id = keys[i][j];
                 
@@ -862,7 +864,7 @@ function addAge(parent, target, date, label1, label2){
   var age = addTextbox(cell2_3, "number", target);
   
   age.style.width = "100px";
-  age.style.fontSize = "32px";
+  age.style.fontSize = "24px";
   age.style.textAlign = "center";
   age.setAttribute("target", target.id);
   age.id = "age" + target.id;
@@ -878,6 +880,8 @@ function addAge(parent, target, date, label1, label2){
       showKeyboard(__$('age' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);
       
     } 
+    
+    showShield("checkDate('" + this.getAttribute('target') + "', true)"); 
     
     checkDate(this.getAttribute('target'), true);
     
@@ -928,7 +932,7 @@ function addDate(parent, target, date){
           "value" : "+",
           "onmousedown" : "incrementYear(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         },
         {
           "type"  : "button",
@@ -937,7 +941,7 @@ function addDate(parent, target, date){
           "value" : "+",
           "onmousedown" : "incrementMonth(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         },
         {
           "type"  : "button",
@@ -946,7 +950,7 @@ function addDate(parent, target, date){
           "value" : "+",
           "onmousedown" : "incrementDate(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         }
       ],
       [
@@ -957,7 +961,7 @@ function addDate(parent, target, date){
           "value" : (!isNaN(date.getFullYear()) ? date.getFullYear() : (currentdate.length == 3 ? currentdate[2] : "?")),
           "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtYearFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center; width: 100%;"
+          "style" : "font-size: 24px; text-align: center; width: 100%;"
         },
         {
           "type"  : "input",
@@ -966,7 +970,7 @@ function addDate(parent, target, date){
           "value" : (typeof(months[date.getMonth()]) != "undefined" ? months[date.getMonth()] : (currentdate.length == 3 ? currentdate[1] : "?")),
           "onmousedown" : "showShield(); addList(__$('txtMonthFor' + this.getAttribute('target')),{'Jan':'January','Feb':'February','Mar':'March','Apr':'April','May':'May','Jun':'June','Jul':'July','Aug':'August','Sep':'September','Oct':'October','Nov':'November','Dec':'December','?':'Unknown'},'single',__$('txtMonthFor' + this.getAttribute('target')),__$('txtMonthFor' + this.getAttribute('target')), 'checkDate(\"' + this.getAttribute('target') + '\")'); checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center; width: 100%;"
+          "style" : "font-size: 24px; text-align: center; width: 100%;"
         },
         {
           "type"  : "input",
@@ -975,7 +979,7 @@ function addDate(parent, target, date){
           "value" : (!isNaN(date.getDate()) ? date.getDate() : (currentdate.length == 3 ? currentdate[0] : "?")),
           "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtDateFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
-          "style" : "font-size: 32px; text-align: center; width: 100%;"
+          "style" : "font-size: 24px; text-align: center; width: 100%;"
         }
       ],
       [
@@ -986,7 +990,7 @@ function addDate(parent, target, date){
           "value" : "-",
           "onmousedown" : "decrementYear(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         },
         {
           "type"  : "button",
@@ -995,7 +999,7 @@ function addDate(parent, target, date){
           "value" : "-",
           "onmousedown" : "decrementMonth(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         },
         {
           "type"  : "button",
@@ -1004,7 +1008,7 @@ function addDate(parent, target, date){
           "value" : "-",
           "onmousedown" : "decrementDate(this.getAttribute('target'))",
           "class" : "button blue",
-          "style" : "height: 75px; margin: auto; width: 100%;"
+          "style" : "height: 60px; margin: auto; width: 100%;"
         }
       ]
     ];
@@ -1372,8 +1376,8 @@ function addList(parent, options, optionType, target1, target2, action){
       list.style.position = "absolute";
       list.style.border = "1px solid #999";
       list.style.boxShadow = "inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC";
-      list.style.width = "200px";
-      list.style.height = "365px";
+      list.style.width = "300px";
+      list.style.height = "618px";
       list.id = "keyboard";
       list.style.left = (pos[3]) + "px";
       list.style.top = (pos[2] + pos[1]) + "px";
@@ -1397,7 +1401,15 @@ function addList(parent, options, optionType, target1, target2, action){
       
       if(lpos[1] + lpos[2] > h){
         
-        __$("keyboard").style.top = (pos[2] - lpos[1] - 2) + "px";
+        if((pos[2] - lpos[1] + 5) < 0){
+			
+			__$("keyboard").style.top = (pos[2] - lpos[1] + ((pos[2] - lpos[1] - 5) * -1)) + "px";
+			
+		} else {
+			
+			__$("keyboard").style.top = (pos[2] - lpos[1] - 2) + "px";
+			
+		}
         
       }  
           
@@ -1445,15 +1457,16 @@ function addCombo(parent, options, optionType, target1, target2, collapseOnClick
   
   var base = document.createElement("div");
   base.style.width = "100%";
-  base.style.height = "348px";
+  base.style.height = "100%"; // "618px";
   base.style.overflow = "auto";
   
   parent.appendChild(base);
   
   var ul = document.createElement("ul");
-  ul.style.marginTop = "5px";
+  ul.style.marginTop = "0px";
   ul.style.marginBottom = "5px";
   ul.style.paddingLeft = "0px";
+  ul.style.paddingTop = "0px";
   
   var uls = document.getElementsByTagName("ul");
   
@@ -1469,8 +1482,8 @@ function addCombo(parent, options, optionType, target1, target2, collapseOnClick
     li.style.listStyle = "none";
     li.style.paddingLeft = "5px";
     li.style.paddingRight ="5px";
-    li.style.marginTop = "5px";
-    li.style.marginBottom = "5px";
+    li.style.marginTop = "2px";
+    li.style.marginBottom = "2px";
     li.style.fontFamily = '"Nimbus Sans L","Arial Narrow",sans-serif';
     li.style.fontSize = "1.2em";
     li.style.padding = "10px";
@@ -1875,7 +1888,7 @@ function loadPage(section){
       
       if(__$("main-content-area")){
         
-        __$("main-content-area").style.height = (window.innerHeight - 40 - 70 - 360) + "px";
+        __$("main-content-area").style.height = (window.innerHeight - 40 - 50 - 300) + "px";
         
         
       }
@@ -1903,8 +1916,8 @@ function loadPage(section){
   cell0_1.style.borderBottom = "1px solid #3465a4";
   cell0_1.style.color = "#3465a4";
   cell0_1.style.overflow = "hidden";
-  cell0_1.style.fontSize = "48px";
-  cell0_1.style.height = "70px";
+  cell0_1.style.fontSize = "36px";
+  cell0_1.style.height = "50px";
   cell0_1.innerHTML = fieldsets[section].getElementsByTagName("legend")[0].innerHTML;
   
   row0.appendChild(cell0_1);
@@ -1927,7 +1940,7 @@ function loadPage(section){
   
   var cell2_1 = document.createElement("div");
   cell2_1.style.display = "table-cell";
-  cell2_1.style.height = "360px";
+  cell2_1.style.height = "300px";
   
   row2.appendChild(cell2_1);
   
@@ -1952,6 +1965,7 @@ function loadPage(section){
   stage.id = "stage";
   stage.style.textAlign = "center";
   stage.style.verticalAlign = "middle";
+  stage.style.height = "300px";
   
   row.appendChild(stage);
   
@@ -2029,6 +2043,8 @@ function loadPage(section){
   if(btnCancel){
       btnCancel.style.width = "98%";
       
+	  btnCancel.style.fontSize = "24px";
+								
       btnCancel.onmousedown = function(){
         
         if(typeof(cancelDestination) != "undefined"){
@@ -2042,14 +2058,20 @@ function loadPage(section){
   
   if(btnClear){
       btnClear.style.width = "98%";
+      
+	  btnClear.style.fontSize = "24px";							
   }
   
   if(btnBack){
       btnBack.style.width = "98%";
+      
+	  btnBack.style.fontSize = "24px";	
   }
   
   if(btnNext){
       btnNext.style.width = "98%";
+      
+	  btnNext.style.fontSize = "24px";	
   }
   
   var fields = fieldsets[section].elements;
@@ -2057,7 +2079,7 @@ function loadPage(section){
   var mainContentArea = document.createElement("div");  
   mainContentArea.style.overflowY = "auto";
   mainContentArea.id = "main-content-area";
-  mainContentArea.style.height = (window.innerHeight - 40 - 70 - 360) + "px";
+  mainContentArea.style.height = (window.innerHeight - 40 - 50 - 300) + "px";
   mainContentArea.style.width = "100%";
   
   cell1_1.appendChild(mainContentArea);
@@ -2161,6 +2183,10 @@ function loadPage(section){
               choiceRow.appendChild(choiceCell);
               
               var btnChoice = addButton(choiceCell, btns[r].label.innerHTML, (btns[r].checked ? "orange" : "blue"));
+              
+              btnChoice.style.fontSize = "20px";
+              
+              btnChoice.style.height = "60px";
               
               btnChoice.name = "btn" + btns[r].name;
               
@@ -3024,11 +3050,17 @@ function checkValidity(){
   
 }
 
-function showShield(){
+function showShield(action){
   
   if(__$("shield")){
     
     if(__$("keyboard")){
+      
+      if(action != undefined){
+		  
+		  eval(action);
+		  
+	  }
       
       document.body.removeChild(__$('keyboard'));
       
@@ -3047,9 +3079,19 @@ function showShield(){
     shield.style.height = "100%";
     shield.id = "shield";
     
+    if(action != undefined){
+		
+		shield.setAttribute("action", action);
+		
+	}
+    
     shield.onclick = function(){
       
-      showShield();
+      if(this.getAttribute("action") != null){
+		  showShield(this.getAttribute("action"));
+	  } else {
+		  showShield();
+	  }
       
     }
     
