@@ -1,81 +1,53 @@
-<!DOCTYPE=html>
+<!DOCTYPE=HTML>
 <html>
 	<head>
-		<title>Wizard Test</title>
-		<script>
-			var cancelDestination = "index.html";
-		</script>
+		<title>Patient Dashboard</title>
 	</head>
 	<body>
-		<form>
-			<fieldset>
-				<legend>Demographics:</legend>
-				<label for="first_name">First Name:</label>
-				<input id="first_name" type="text" value="" />
-				<br>
-				<label for="middle_name">Middle Name Initial:</label>
-				<input id="middle_name" type="text" value="" optional=true regex="^[A-Z]\.$" />
-				<br>
-				<label for="last_name">Last Name:</label>
-				<input id="last_name" type="text" value="" />
-				<br>
-				<label for="number">Number:</label>
-				<input id="number" type="text" value="" fieldtype="number" />
-				<br>
-				<label for="decimal">Decimal:</label>
-				<input id="decimal" type="text" value="" fieldtype="decimal" regex="\d+\.\d+" />
-				<br>
-				<label for="date">Date:</label>
-				<input id="date" type="text" value="" fieldtype="date" />
-				<br>
-				<label for="dob1">Date of birth:</label> 
-				<input id="dob1" type="text" value="" fieldtype="age" />
-			</fieldset>
-			<fieldset>
-				<legend>Demographics (cont'd):</legend>
-				<label for="gender">Gender:</label> 
-				<select id="gender">
-					<option></option>
-					<option value="F">Female</option>
-					<option value="M">Male</option>
-				</select>
-				<br>
-				<label for="dob">Date of birth:</label> 
-				<input id="dob" type="text" value="" fieldtype="age" />
-			</fieldset>			
-			<fieldset>
-				<legend>Choices Example</legend>
-				<label for="choice1">Choice 1</label>
-				<label for="choice1.0">Yes</label>
-				<input type="radio" name="choice1" id="choice1.0" value="yes"/>
-				<label for="choice1.1">No</label>
-				<input type="radio" name="choice1" id="choice1.1" value="no"/>
-				<label for="choice1.2">No Idea</label>
-				<input type="radio" name="choice1" id="choice1.2" value="no idea"/>
-				<label for="choice1.3">Unknown</label>
-				<input type="radio" name="choice1" id="choice1.3" value="unknown"/>
+		
+		<div id="home">
+			
+			<input type="text" id="appname" value="HIV Testing<br/>&<br/>Counseling" />
+			
+			<div id="patient-card">
 				
-				<br />
-				<label for="choice2">Choice 2</label>
-				<label for="choice2.0">Yes</label>
-				<input type="radio" name="choice2" id="choice2.0" value="yes"/>
-				<label for="choice2.1">No</label>
-				<input type="radio" name="choice2" id="choice2.1" value="no"/>
-				<label for="choice2.2">No Idea</label>
-				<input type="radio" name="choice2" id="choice2.2" value="no idea"/>
+				<input type="text" id="gender" value="F" />
 				
-				<br />
-				<label for="choice3">Choice 3</label>
-				<label for="choice3.0">Yes</label>
-				<input type="radio" name="choice3" id="choice3.0" value="yes"/>
-				<label for="choice3.1">No</label>
-				<input type="radio" name="choice3" id="choice3.1" value="no"/>
-				<label for="choice3.2">No Idea</label>
-				<input type="radio" name="choice3" id="choice3.2" value="no idea"/>
-			</fieldset>
-			<input type="reset" value="Reset" />
-			<input type="submit" value="Submit" />
-		</form> 
-    <script src="../ts.js"></script>
+				<input type="text" id="name" value="Jane Doe" />
+				
+				<input type="text" id="Accession Number" value="0001" />
+				
+				<input type="text" id="Age" value="34" />
+				
+				<input type="text" id="Residence" value="Area 9" />
+				
+				<input type="text" id="Work-flow Status" value="In session" />
+				
+			</div>
+			
+			<div id="buttons">
+				
+				<button onmousedown="window.location = ''">Finish</button>
+				
+				<button onmousedown="window.location = ''">Cancel</button>
+				
+				<button onmousedown="window.location = 'demographics.html'">Demographics</button>
+				
+				<button onmousedown="window.location = 'conditionals.html'">Counseling Protocol</button>
+				
+				<button onmousedown="window.location = 'choices.html'">HIV Testing Protocol</button>
+				
+			</div>
+			
+			<select id="tabs">
+				<option value="current_visit.html">Current Visit</option>
+				<option value="previous_visits.html">Past Week Visits</option>
+				<option value="previous_visits.html">Past Month Visits</option>
+				<option value="previous_visits.html">Past Year Visits</option>
+			</select>
+			
+		</div>
+		
+		<script src="../dashboard.js"></script>
 	</body>
 </html>

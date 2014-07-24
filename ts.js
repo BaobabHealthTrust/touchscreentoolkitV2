@@ -46,7 +46,7 @@ var currentPage = 0;
         
 var btnClear, btnBack, btnNext;        
       
-var textSize = "36px";
+var textSize = "24px";
     
 var cursorPos = 0;
      
@@ -2076,7 +2076,13 @@ function loadPage(section){
       continue;
       
     }      
-          
+    
+    if(fields[i].type == "hidden"){
+	
+		continue;
+		
+	}
+	      
     var row = document.createElement("div");
     row.style.display = "table-row";
     
