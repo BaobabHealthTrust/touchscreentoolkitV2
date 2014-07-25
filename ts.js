@@ -42,6 +42,8 @@ var timers = {};
 
 var fieldsets = [];     
     
+var navigablefieldsets = [];     
+    
 var currentPage = 0;
         
 var btnClear, btnBack, btnNext;        
@@ -105,6 +107,25 @@ function init(){
   }
     
   fieldsets = document.forms[0].getElementsByTagName("fieldset");  
+  
+  for(var i = 0; i < fieldsets.length; i++){
+	  
+	var currentset = fieldsets[i].elements;
+	var resultset = [];
+	
+	navigablefieldsets.push([]);
+	
+	for(var j = 0; j < currentset.length; j++){
+		
+		if(currentset[j].type.toLowerCase() != "hidden"){
+			
+			navigablefieldsets[i].push(currentset[j]);
+			
+		}
+		
+	}
+	  
+  }
   
   loadPage(currentPage);
   
@@ -1306,7 +1327,33 @@ function addTextbox(parent, boxType, target, callback){
   }  
 
   if(boxType == undefined){
-    boxType = "text";
+	  
+	if(__$(target)){
+		
+		if(__$(target).type != undefined && __$(target).type.toLowerCase() == "password"){
+			
+			boxType = "password";
+		
+		} else if(__$(target).type != undefined && __$(target).type.toLowerCase() == "barcode"){
+			
+			boxType = "barcode";
+			
+		} else if(__$(target).type != undefined && __$(target).type.toLowerCase() == "number"){
+			
+			boxType = "number";
+			
+		} else {
+			
+			boxType = "text";
+			
+		}
+		
+	}  else {
+		
+		boxType = "text";
+		
+	}
+	
   }
 
   var txt = document.createElement("input");
@@ -1317,7 +1364,10 @@ function addTextbox(parent, boxType, target, callback){
   txt.style.width = "98.5%";
   txt.style.margin = "auto";
   txt.setAttribute("target", target.id);
+  txt.setAttribute("fieldtype", boxType.toLowerCase());
   
+  parent.appendChild(txt);
+
   txt.onchange = function(){
     if(__$(this.getAttribute("target"))){
       __$(this.getAttribute("target")).value = this.value;
@@ -1341,8 +1391,12 @@ function addTextbox(parent, boxType, target, callback){
       break;
     case "barcode":
       
-      if(callback != undefined)
-        eval(callback);
+		if(callback != undefined){
+			// eval(callback);
+			
+			txt.setAttribute("callback", callback);
+			
+		}
         
     default:
       txt.setAttribute("type", "text");
@@ -1350,8 +1404,6 @@ function addTextbox(parent, boxType, target, callback){
       break; 
   }
   
-  parent.appendChild(txt);
-
   return txt;
 
 }
@@ -2074,7 +2126,7 @@ function loadPage(section){
 	  btnNext.style.fontSize = "24px";	
   }
   
-  var fields = fieldsets[section].elements;
+  var fields = navigablefieldsets[section];	// fieldsets[section].elements;
   
   var mainContentArea = document.createElement("div");  
   mainContentArea.style.overflowY = "auto";
@@ -2230,7 +2282,9 @@ function loadPage(section){
             
             var fieldtype = fields[i].getAttribute("fieldtype");
             
-            var txt = addTextbox(cell, "text", fields[i].id);
+            var callback = fields[i].getAttribute("callback");
+            
+            var txt = addTextbox(cell, fieldtype, fields[i].id, (callback != null ? callback : undefined));
             
             txt.style.fontSize = textSize;
               
@@ -2262,18 +2316,24 @@ function loadPage(section){
               
             } else {
               
-              txt.value = fields[i].value;
+              txt.value = fields[i].value;                           
               
             }  
               
             txt.onfocus = function(){
               
-              cursorPos = parseInt(this.getAttribute("pos"));
+				cursorPos = parseInt(this.getAttribute("pos"));
               
-              var section = parseInt(this.getAttribute("section"));
+				var section = parseInt(this.getAttribute("section"));
               
-              navigateTo(cursorPos, section);
+				navigateTo(cursorPos, section);
               
+				if(this.getAttribute("callback") != null){
+					
+					eval(this.getAttribute("callback"));
+					
+				}
+				
             }
           
           }
@@ -2293,7 +2353,7 @@ function loadPage(section){
 
 function navigateTo(pos, section){
   
-  var fields = fieldsets[section].elements;
+  var fields = navigablefieldsets[section];		// fieldsets[section].elements;
   
   if(fields[pos].getAttribute("disabled") != null){
     
@@ -2363,7 +2423,7 @@ function navigateTo(pos, section){
           
           var section = parseInt(this.getAttribute("section"));
           
-          var fields = fieldsets[section].elements;
+          var fields = navigablefieldsets[section];		// fieldsets[section].elements;
           
           __$("textFor" + fields[pos].id).value = "";
           
@@ -2470,6 +2530,16 @@ function navigateTo(pos, section){
           
         };
         
+        btnNext.onclick = function(){
+                
+          var pos = parseInt(this.getAttribute("pos")) + 1;
+          
+          var section = parseInt(this.getAttribute("section"));
+          
+          navigateTo(pos, section);
+          
+        };
+        
       } else if((section < fieldsets.length - 1 && pos == fields.length - 1) || (section == fieldsets.length - 1 && pos < fields.length - 1)){
         
         btnNext.innerHTML = "Next";        
@@ -2484,11 +2554,31 @@ function navigateTo(pos, section){
           
         };
         
+        btnNext.onclick = function(){
+             
+          if(!incomplete){                      
+            var section = parseInt(this.getAttribute("section")) + 1;
+            
+            loadPage(section);          
+          }
+          
+        };
+        
       } else {
         
         btnNext.innerHTML = "Finish";
         
         btnNext.onmousedown = function(){
+        
+            if(!incomplete){  
+              
+              document.forms[0].submit();
+              
+            }
+          
+        };
+        
+        btnNext.onclick = function(){
         
             if(!incomplete){  
               
@@ -2549,6 +2639,10 @@ function navigateTo(pos, section){
           combo.style.fontSize = textSize;
           
           combo.style.textAlign = "left";
+          
+          break;
+        case "barcode":
+          __$("stage").innerHTML = "";
           
           break;
         case "date":
@@ -2639,7 +2733,7 @@ function navigateTo(pos, section){
           
           var section = parseInt(this.getAttribute("section"));
           
-          var fields = fieldsets[section].elements;
+          var fields = navigablefieldsets[section];		// fieldsets[section].elements;
           
           if(fields[pos].type == "radio"){
             
@@ -2830,7 +2924,7 @@ function checkValidity(){
   
   clearTimeout(validityTmr);
   
-  var fields = fieldsets[currentPage].elements;
+  var fields = navigablefieldsets[currentPage];		// fieldsets[currentPage].elements;
   
   incomplete = false;
   

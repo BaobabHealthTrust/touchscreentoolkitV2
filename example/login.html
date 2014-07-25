@@ -1,0 +1,58 @@
+<!DOCTYPE=html>
+<html>
+	<head>
+		<title>Wizard Test</title>
+		<script>
+			var cancelDestination = "index.html";
+			
+			function __$(id){
+				return document.getElementById(id);
+			}
+			
+			function doLogin(id){
+				
+				if(btnNext){
+					
+					if(__$(id) && __$(id).value.trim().match(/\$/)){
+							
+						if(__$("textFor" + id)){	
+							
+							__$("textFor" + id).value = __$("textFor" + id).value.trim().replace(/\$/, "");
+							
+						}
+					
+						btnNext.click();
+						
+						return;
+					}
+					
+				}
+				
+				setTimeout("doLogin('" + id + "')", 500);
+			}
+			
+		</script>
+	</head>
+	<body>
+		<form>
+			<fieldset>
+				<label for="location">Location:</label>
+				<input id="location" name="location" type="text" fieldtype="barcode" value="" callback="doLogin('location')" />
+				<br>
+				<legend>Login:</legend>
+				<label for="username">Username:</label>
+				<input id="username" name="username" type="text" value="" />
+				
+				<input id="test1" name="test1" type="hidden" value="test1" />
+				<input id="test2" name="test2" type="hidden" value="test2" />
+				<input id="test3" name="test3" type="hidden" value="test3" />
+				<br>
+				<label for="password">Password:</label>
+				<input id="password" name="password" type="password" value="" />
+			</fieldset>
+			<input type="reset" value="Reset" />
+			<input type="submit" value="Submit" />
+		</form> 
+    <script src="../ts.js"></script>
+	</body>
+</html>
