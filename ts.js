@@ -56,7 +56,11 @@ var tracker;
             
 var incomplete = false;
 
+var trackingString = "";
+
 var validityTmr;            
+            
+var overwriteNumber = true;
             
 function __$(id){
   return document.getElementById(id);
@@ -346,14 +350,14 @@ function showFixedKeyboard(ctrl, container, disabled, numbers, caps){
 }          
    
 function showKeyboard(ctrl, disabled, numbers, caps){
-    if(__$('keyboard') && numbers == undefined){
+    if(__$('popupkeyboard') && numbers == undefined){
         
-        document.body.removeChild(__$('keyboard'));
+        document.body.removeChild(__$('popupkeyboard'));
         
     } else {
     
-        if(__$('keyboard')){
-          document.body.removeChild(__$('keyboard'));
+        if(__$('popupkeyboard')){
+          document.body.removeChild(__$('popupkeyboard'));
         }
     
         if(!__$("main")){
@@ -378,7 +382,7 @@ function showKeyboard(ctrl, disabled, numbers, caps){
         currentKeysNumeric = numbers;
         
         var div = document.createElement('div');
-        div.id = 'keyboard';
+        div.id = 'popupkeyboard';
         div.style.position = 'absolute';
         div.style.border = '1px solid #5ca6c4';
         div.style.borderRadius = '10px';
@@ -536,7 +540,17 @@ function showKeyboard(ctrl, disabled, numbers, caps){
                               
                             } else {
                               
-                              target.value += (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+                              if(overwriteNumber){
+								  
+								  target.value = (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+								  
+								  overwriteNumber = false;
+								  
+							  } else {
+								  
+								  target.value += (currentCaseUpper ? this.innerHTML.trim().toLowerCase() : this.innerHTML.trim());
+								  
+							  }
                               
                             }
                             
@@ -559,22 +573,22 @@ function showKeyboard(ctrl, disabled, numbers, caps){
             }
         }
         
-        if(__$("keyboard")){
+        if(__$("popupkeyboard")){
         
           // [w, h, t, l]
-          var kpos = checkCtrl(__$("keyboard"));
+          var kpos = checkCtrl(__$("popupkeyboard"));
           var w = window.innerWidth;
           var h = window.innerHeight;
           
           if(kpos[0] + kpos[3] > w){
             
-            __$("keyboard").style.left = (w - kpos[0] - 10) + "px";
+            __$("popupkeyboard").style.left = (w - kpos[0] - 10) + "px";
             
           }                
           
           if(kpos[1] + kpos[2] > h){
             
-            __$("keyboard").style.top = (pos[2] - kpos[1] - 2) + "px";
+            __$("popupkeyboard").style.top = (pos[2] - kpos[1] - 2) + "px";
             
           }                
           
@@ -892,9 +906,11 @@ function addAge(parent, target, date, label1, label2){
   
   age.onmousedown = function(){
   
-    if(__$('keyboard')){
+	overwriteNumber = true; 
+	
+    if(__$('popupkeyboard')){
     
-      document.body.removeChild(__$('keyboard'));
+      document.body.removeChild(__$('popupkeyboard'));
       
     } else {
     
@@ -980,7 +996,7 @@ function addDate(parent, target, date){
           "id"    : "txtYearFor" + target.id,
           "target": target.id,
           "value" : (!isNaN(date.getFullYear()) ? date.getFullYear() : (currentdate.length == 3 ? currentdate[2] : "?")),
-          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtYearFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
+          "onmousedown" : "overwriteNumber = true; if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(\"checkDate('\" + this.getAttribute('target') + \"', false)\"); showKeyboard(__$('txtYearFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
           "style" : "font-size: 24px; text-align: center; width: 100%;"
         },
@@ -998,7 +1014,7 @@ function addDate(parent, target, date){
           "id"    : "txtDateFor" + target.id,
           "target": target.id,
           "value" : (!isNaN(date.getDate()) ? date.getDate() : (currentdate.length == 3 ? currentdate[0] : "?")),
-          "onmousedown" : "if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(); showKeyboard(__$('txtDateFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
+          "onmousedown" : "overwriteNumber = true; if(__$('keyboard')){document.body.removeChild(__$('keyboard'));} else {showShield(\"checkDate('\" + this.getAttribute('target') + \"', false)\"); showKeyboard(__$('txtDateFor' + this.getAttribute('target')),{':':':','/':'/','.':'.','abc':'abc'},true);} checkDate(this.getAttribute('target'));",
           "class" : "input_cell",
           "style" : "font-size: 24px; text-align: center; width: 100%;"
         }
@@ -1174,145 +1190,256 @@ function decrementDate(id){
 }
 
 function checkDate(id, byAge){
-  if(__$("txtDateFor" + id) && __$("txtYearFor" + id) && __$("txtMonthFor" + id)){
   
-    if(byAge == undefined || byAge == false){
-    
-      if(!__$("txtYearFor" + id).value.trim().match(/^\d{4}$/)){
-      
-        __$("txtYearFor" + id).value = "?";
-        
-        __$("txtMonthFor" + id).value = "?";
-        
-        __$("txtDateFor" + id).value = "?";
-                  
-        if(__$(id)){
-          
-          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
-          
-        }
+	if(__$("txtDateFor" + id) && __$("txtYearFor" + id) && __$("txtMonthFor" + id)){
+	  
+		if(byAge == undefined || byAge == false){
+		
+			if(!__$("txtYearFor" + id).value.trim().match(/^\d{4}$/)){
+		  
+				__$("txtYearFor" + id).value = "?";
 
-        if(__$("age" + id)){
-            
-          __$("age" + id).value = "";
-        
-        }
-        
-        return;
-        
-      }
-    
-      if(__$("txtMonthFor" + id).value.trim() == "?"){
-        
-        __$("txtMonthFor" + id).value = "?";
-        
-        __$("txtDateFor" + id).value = "?";
-                  
-        if(__$(id)){
-          
-          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
-          
-        }
+				__$("txtMonthFor" + id).value = "?";
 
-        if(__$("age" + id)){
-          
-          var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
-          
-          var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
-                  
-          __$("age" + id).value = Math.round(age);
-        
-        }
-        
-        return;
-        
-      }
+				__$("txtDateFor" + id).value = "?";
+						  
+				if(__$(id)){
+				  
+				  __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+				  
+				}
+
+				if(__$("age" + id)){
+					
+				  __$("age" + id).value = "";
+
+				}
+				
+				return;
+				
+			}
+		
+			if(__$("txtMonthFor" + id).value.trim() == "?"){
+			
+				__$("txtMonthFor" + id).value = "?";
+				
+				__$("txtDateFor" + id).value = "?";
+						  
+				if(__$(id)){
+				  
+				  __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+				  
+				}
+
+				if(__$("age" + id)){
+				  
+				  var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
+				  
+				  var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+						  
+				  __$("age" + id).value = Math.round(age);
+				
+				}
+				
+				return;
+			
+			}
+		
+			if(__$("txtDateFor" + id).value.trim() == "?"){
+				
+				__$("txtDateFor" + id).value = "?";
+				  
+				if(__$(id)){
+				  
+				  __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+				  
+				}
+			  
+				if(__$("age" + id)){
+				  
+				  var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
+				  
+				  var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+						  
+				  __$("age" + id).value = Math.round(age);
+				
+				}
+				
+				return;
+				
+			}
+		  
+			var value = parseInt(__$("txtDateFor" + id).value.trim());
+
+			var month = monthNames[__$("txtMonthFor" + id).value.trim()];
+
+			if(month + 1 < 12){
+				month += 2;
+			} else {
+				month = 1;
+			}
+
+			var date = new Date(__$("txtYearFor" + id).value.trim() + "-" + padZeros(month, 2) + "-01")
+
+			date.setDate(date.getDate() - 1);
+
+			if(value > date.getDate()){
+				value = date.getDate();
+			}
+
+			__$("txtDateFor" + id).value = value;
+
+			if(__$(id)){
+
+				__$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+
+			}
+		  
+			if(__$("age" + id)){
+
+				var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((month - 1 < 1 ? 12 : (month - 1)), 2) + "-" + padZeros(parseInt(__$("txtDateFor" + id).value.trim()), 2);
+
+				var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+						
+				__$("age" + id).value = Math.round(age);
+
+			}
+
+		} else {
     
-      if(__$("txtDateFor" + id).value.trim() == "?"){
+			if(__$("age" + id)){
         
-        __$("txtDateFor" + id).value = "?";
-          
-        if(__$(id)){
-          
-          __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
-          
-        }
-      
-        return;
-        
-      }
-      
-      var value = parseInt(__$("txtDateFor" + id).value.trim());
-        
-      var month = monthNames[__$("txtMonthFor" + id).value.trim()];
-      
-      if(month + 1 < 12){
-        month += 2;
-      } else {
-        month = 1;
-      }
-      
-      var date = new Date(__$("txtYearFor" + id).value.trim() + "-" + padZeros(month, 2) + "-01")
-      
-      date.setDate(date.getDate() - 1);
-      
-      if(value > date.getDate()){
-        value = date.getDate();
-      }
-      
-      __$("txtDateFor" + id).value = value;
-      
-      if(__$(id)){
-        
-        __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
-        
-      }
-      
-      if(__$("age" + id)){
-        
-        var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((month - 1 < 1 ? 12 : (month - 1)), 2) + "-" + padZeros(parseInt(__$("txtDateFor" + id).value.trim()), 2);
-        
-        var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
-                
-        __$("age" + id).value = Math.round(age);
-      
-      }
-      
-    } else {
-    
-      if(__$("age" + id)){
-        
-        var age = parseInt(__$("age" + id).value);
-        
-        if(!isNaN(age)){
-          
-          var yrs = (new Date()).getFullYear() - age;
-          
-          __$("txtYearFor" + id).value = yrs;
-          
-          __$("txtMonthFor" + id).value = "?";
-          
-          __$("txtDateFor" + id).value = "?";
-          
-        } else {
-            
-          __$("txtYearFor" + id).value = "?";
-          
-          __$("txtMonthFor" + id).value = "?";
-          
-          __$("txtDateFor" + id).value = "?";
-                   
-        }
-      }
+				var age = parseInt(__$("age" + id).value);
+				
+				if(!isNaN(age)){
+				  
+				  var yrs = (new Date()).getFullYear() - age;
+				  
+				  __$("txtYearFor" + id).value = yrs;
+				  
+				  __$("txtMonthFor" + id).value = "?";
+				  
+				  __$("txtDateFor" + id).value = "?";
+				  
+				} else {
+					
+				  __$("txtYearFor" + id).value = "?";
+				  
+				  __$("txtMonthFor" + id).value = "?";
+				  
+				  __$("txtDateFor" + id).value = "?";
+						   
+				}
+			}
        
-      if(__$(id)){
+			if(__$(id)){
+				
+				if(!__$("txtYearFor" + id).value.trim().match(/^\d{4}$/)){
+      
+					__$("txtYearFor" + id).value = "?";
+
+					__$("txtMonthFor" + id).value = "?";
+
+					__$("txtDateFor" + id).value = "?";
+							  
+					if(__$(id)){
+					  
+					  __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+					  
+					}
+
+					if(__$("age" + id)){
+						
+					  __$("age" + id).value = "";
+
+					}
+					
+					return;
+					
+				}
+    
+				if(__$("txtMonthFor" + id).value.trim() == "?"){
         
-        __$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+					__$("txtMonthFor" + id).value = "?";
+					
+					__$("txtDateFor" + id).value = "?";
+							  
+					if(__$(id)){
+					  
+						__$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+					  
+					}
+
+					if(__$("age" + id)){
+					  
+						var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
+
+						var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+							  
+						__$("age" + id).value = Math.round(age);
+					
+					}
+					
+					return;
+				
+				}
         
-      }
+				if(__$("txtDateFor" + id).value.trim() == "?"){
+				
+					__$("txtDateFor" + id).value = "?";
+				  
+					if(__$(id)){
+				  
+						__$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+				  
+					}
+				  
+					if(__$("age" + id)){
+					  
+					  var actual = __$("txtYearFor" + id).value.trim() + "-" + padZeros((new Date()).getMonth() + 1, 2) + "-" + padZeros((new Date()).getDate(), 2);
+					  
+					  var age = ((new Date()) - (new Date(actual))) / (365 * 24 * 60 * 60 * 1000);
+							  
+					  __$("age" + id).value = Math.round(age);
+					
+					}
+					
+					return;
+				
+				}
+		  
+				var value = parseInt(__$("txtDateFor" + id).value.trim());
+
+				var month = monthNames[__$("txtMonthFor" + id).value.trim()];
+
+				if(month + 1 < 12){
+					month += 2;
+				} else {
+					month = 1;
+				}
+
+				var date = new Date(__$("txtYearFor" + id).value.trim() + "-" + padZeros(month, 2) + "-01")
+
+				date.setDate(date.getDate() - 1);
+
+				if(value > date.getDate()){
+					value = date.getDate();
+				}
+
+				__$("txtDateFor" + id).value = value;
+
+				if(__$(id)){
+
+					__$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+
+				}
+		  
+				__$(id).value = __$("txtDateFor" + id).value.trim() + "/" + __$("txtMonthFor" + id).value.trim() + "/" + __$("txtYearFor" + id).value.trim();
+        
+			}
               
-    }
-  }
+		}
+	}
 }
 
 /*
@@ -1408,7 +1535,7 @@ function addTextbox(parent, boxType, target, callback){
 
 }
 
-function addList(parent, options, optionType, target1, target2, action){
+function addList(parent, options, optionType, target1, target2, action, lHeight, lWidth){
   if(parent == undefined || options == undefined || target1 == undefined || target2 == undefined || optionType == undefined){
       return;
   }
@@ -1417,9 +1544,9 @@ function addList(parent, options, optionType, target1, target2, action){
   
   if(__$(id)){
       
-    if(__$("keyboard")){
+    if(__$("popupkeyboard")){
     
-      document.body.removeChild(__$("keyboard"));
+      document.body.removeChild(__$("popupkeyboard"));
     
     } else {
     
@@ -1428,11 +1555,11 @@ function addList(parent, options, optionType, target1, target2, action){
       list.style.position = "absolute";
       list.style.border = "1px solid #999";
       list.style.boxShadow = "inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC";
-      list.style.width = "300px";
-      list.style.height = "618px";
-      list.id = "keyboard";
+      list.style.width = (lWidth != undefined ? lWidth : "300px");
+      list.style.height = (lHeight != undefined ? lHeight : "618px");
+      list.id = "popupkeyboard";
       list.style.left = (pos[3]) + "px";
-      list.style.top = (pos[2] + pos[1]) + "px";
+      list.style.top = (pos[2] + pos[1] - (__$("main-content-area") ? __$("main-content-area").scrollTop : 0)) + "px";
       list.style.backgroundColor = "#fff";
       list.style.overflow = "auto";
       
@@ -1441,13 +1568,13 @@ function addList(parent, options, optionType, target1, target2, action){
       addCombo(list, options, optionType, target1, target2, (optionType == "single" ? true : false), id, action);
       
       // [w, h, t, l]
-      var lpos = checkCtrl(__$("keyboard"));
+      var lpos = checkCtrl(__$("popupkeyboard"));
       var w = window.innerWidth;
       var h = window.innerHeight;
       
       if(lpos[0] + lpos[3] > w){
         
-        __$("keyboard").style.left = (w - lpos[0] - 10) + "px";
+        __$("popupkeyboard").style.left = (w - lpos[0] - 10) + "px";
         
       }              
       
@@ -1455,11 +1582,11 @@ function addList(parent, options, optionType, target1, target2, action){
         
         if((pos[2] - lpos[1] + 5) < 0){
 			
-			__$("keyboard").style.top = (pos[2] - lpos[1] + ((pos[2] - lpos[1] - 5) * -1)) + "px";
+			__$("popupkeyboard").style.top = (pos[2] - lpos[1] + ((pos[2] - lpos[1] - 5) * -1)) + "px";
 			
 		} else {
 			
-			__$("keyboard").style.top = (pos[2] - lpos[1] - 2) + "px";
+			__$("popupkeyboard").style.top = (pos[2] - lpos[1] - 2) + "px";
 			
 		}
         
@@ -1628,9 +1755,13 @@ function actOnSingle(li, target1, target2){
         
         eval(this.getAttribute("action"));
         
-        document.body.removeChild(__$("keyboard"));
+        document.body.removeChild(__$("popupkeyboard"));
     
-        showShield();
+		if(__$("shield")){
+			
+			showShield();
+			
+		}
     
       } else if(this.getAttribute("action")!= null){
                 
@@ -2295,7 +2426,21 @@ function loadPage(section){
             txt.setAttribute("pos", i);
               
             txt.setAttribute("section", section);
-              
+            
+            if(fields[i].getAttribute("ajaxURL") != null){
+				
+				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxURL"));
+				
+			} else if(fields[i].getAttribute("ajaxUrl") != null){
+				
+				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxUrl"));
+				
+			} else if(fields[i].getAttribute("ajaxurl") != null){
+				
+				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxurl"));
+				
+			}
+            
             if(fields[i].tagName.toLowerCase() == "select" && fields[i].type.toLowerCase() == "select-multiple"){
               
               var values = "";
@@ -2334,8 +2479,60 @@ function loadPage(section){
 					
 				}
 				
+				if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
+					
+					if(this.getAttribute("lookup") == null){
+						
+						lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
+	
+						this.setAttribute("lookup", true);
+						
+					} else {
+						
+						clearTimeout(lookupTimer);
+	
+						this.removeAttribute("lookup");
+						
+						if(__$("keyboard")){
+							
+							document.body.removeChild(__$("keyboard"));
+							
+						}
+						
+					}
+					
+				}
+				
             }
-          
+            
+            txt.onclick = function(){
+				
+				if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
+					
+					if(this.getAttribute("lookup") == null){
+						
+						lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
+	
+						this.setAttribute("lookup", true);
+						
+					} else {
+						
+						clearTimeout(lookupTimer);
+	
+						this.removeAttribute("lookup");
+						
+						if(__$("popupkeyboard")){
+							
+							document.body.removeChild(__$("popupkeyboard"));
+							
+						}
+						
+					}
+					
+				}
+				
+			}
+            
           }
             
           break;
@@ -2376,7 +2573,13 @@ function navigateTo(pos, section){
     
     return;
   }
-  
+      
+  if(__$("textFor" + fields[pos].id)){
+	  
+	  __$("textFor" + fields[pos].id).focus();
+	  
+  }     
+    
   var fieldtype = fields[pos].getAttribute("fieldtype");
   
   if(!__$("cursor")){
@@ -2477,9 +2680,7 @@ function navigateTo(pos, section){
         btnBack.className = "button blue";
         
         btnBack.onmousedown = function(){
-                    
-          // var pos = parseInt(this.getAttribute("pos")) - 1;
-          
+           
           var pos = parseInt(this.getAttribute("pos")) - (this.getAttribute("step") != null ? parseInt(this.getAttribute("step")) : 1);
           
           var section = parseInt(this.getAttribute("section"));
@@ -2520,16 +2721,6 @@ function navigateTo(pos, section){
         
         btnNext.innerHTML = "Next";
         
-        btnNext.onmousedown = function(){
-                
-          var pos = parseInt(this.getAttribute("pos")) + 1;
-          
-          var section = parseInt(this.getAttribute("section"));
-          
-          navigateTo(pos, section);
-          
-        };
-        
         btnNext.onclick = function(){
                 
           var pos = parseInt(this.getAttribute("pos")) + 1;
@@ -2544,16 +2735,6 @@ function navigateTo(pos, section){
         
         btnNext.innerHTML = "Next";        
         
-        btnNext.onmousedown = function(){
-             
-          if(!incomplete){                      
-            var section = parseInt(this.getAttribute("section")) + 1;
-            
-            loadPage(section);          
-          }
-          
-        };
-        
         btnNext.onclick = function(){
              
           if(!incomplete){                      
@@ -2567,16 +2748,6 @@ function navigateTo(pos, section){
       } else {
         
         btnNext.innerHTML = "Finish";
-        
-        btnNext.onmousedown = function(){
-        
-            if(!incomplete){  
-              
-              document.forms[0].submit();
-              
-            }
-          
-        };
         
         btnNext.onclick = function(){
         
@@ -2871,7 +3042,7 @@ function navigateTo(pos, section){
     }        
     
   }
-              
+             
 }
 
 function checkChanges(id){
@@ -3148,7 +3319,7 @@ function showShield(action){
   
   if(__$("shield")){
     
-    if(__$("keyboard")){
+    if(__$("popupkeyboard")){
       
       if(action != undefined){
 		  
@@ -3156,7 +3327,7 @@ function showShield(action){
 		  
 	  }
       
-      document.body.removeChild(__$('keyboard'));
+      document.body.removeChild(__$('popupkeyboard'));
       
     }
     
@@ -3195,6 +3366,100 @@ function showShield(action){
   
 }
 
+function loadAjax(id, target1, target2, url, search){   
+			
+	var textfile;
+	if (window.XMLHttpRequest)
+	{ 
+		textfile = new XMLHttpRequest(); 
+	}
+	
+	trackingString = search.trim();
+		
+	textfile.onreadystatechange = function ()
+	{   
+		if (textfile.readyState == 4 && textfile.status == 200)
+		{ 
+			var content = textfile.responseText; 
+			
+			var results = content.split("\n");
+			
+			var options = {};
+			
+			for(var i = 0; i < results.length; i++){
+				
+				if(results[i].toLowerCase().match("^" + search.toLowerCase())){
+					
+					options[results[i]] = results[i];
+					
+				}
+				
+			}
+			
+			if(__$("popupkeyboard")){
+				
+				__$("popupkeyboard").innerHTML = "";
+				
+				addCombo(__$("popupkeyboard"), options, "single", target1, target2, true, id, "clearLookup('" + id + "')");
+				
+			} else {
+				
+				addList(__$(id), options, "single", target1, target2, "clearLookup('" + id + "')", (__$("main-content-area").offsetHeight - 50) + "px", __$(id).offsetWidth + "px");
+				
+			}
+			
+		}
+	}
+	textfile.open("GET", url + (url.trim().match(/\?.+/) ? "&search" + search : "?search=" + search), true);
+	textfile.send();
+		
+}
+	
+function clearLookup(id){
+	
+	if(__$(id)){
+		
+		__$(id).removeAttribute("lookup");
+		
+	}
+	
+}
+	
+var lookupTimer;
+
+function checkLookup(id){
+	
+	clearTimeout(lookupTimer);
+	
+    if(__$("textFor" + id).getAttribute("lookup") != null && __$(id).getAttribute("ajaxURL") != null){
+		
+		if(trackingString == __$(id).value.trim() && __$("popupkeyboard")){
+			
+			// skip
+			
+		} else {
+		
+			if(__$(id).getAttribute("ajaxURL") != null){
+				
+				loadAjax("textFor" + id, __$("textFor" + id), __$(id), __$(id).getAttribute("ajaxURL"), __$(id).value.trim());
+				
+			} else if(__$(id).getAttribute("ajaxUrl") != null){
+				
+				loadAjax("textFor" + id, __$("textFor" + id), __$(id), __$(id).getAttribute("ajaxUrl"), __$(id).value.trim());
+				
+			} else if(__$(id).getAttribute("ajaxurl") != null){
+				
+				loadAjax("textFor" + id, __$("textFor" + id), __$(id), __$(id).getAttribute("ajaxurl"), __$(id).value.trim());
+				
+			}
+			
+		}
+		
+	}
+    
+    lookupTimer = setTimeout("checkLookup('" + id + "')", 200);
+}
+		
 init();
 
 
