@@ -1,0 +1,48 @@
+<!DOCTYPE=HTML>
+<html>
+	<head>
+		<title>Patient Dashboard</title>
+		<script>
+			var barcodeDestination = "index.html";
+		</script>
+	</head>
+	<body>
+		
+		<div id="main">
+			
+			<input type="text" id="appname" value="HIV Testing<br/>&<br/>Counselling" />
+			
+			<input type="text" id="datetoday" value="2014-07-29" />
+			
+			<input type="text" id="user" value="Super User" />
+			
+			<input type="text" id="location" value="Room 1" />
+			
+			<input type="text" id="facility" value="Kamuzu Central Hospital" />
+			
+			<div id="buttons">
+				
+				<button onmousedown="window.location = 'default.html'">Find or Register Client</button>
+				
+				<button onmousedown="window.location = 'default.html'">Logout</button>
+				
+				<button onmousedown="window.location = 'default.html'">Swap Desk</button>
+				
+				<button onmousedown="window.location = 'default.html'">Un-Allocated Clients</button>
+				
+				<button onmousedown="window.location = 'default.html'">Room Clients</button>
+				
+			</div>
+			
+			<select id="tabs">
+				<option value="dashboard.html">Rooms Allocation</option>
+				<option value="dashboard.html">Reports</option>
+				<option value="dashboard.html">Administration</option>
+			</select>
+			
+		</div>
+		
+	</body>
+		
+	<script src="../dashboard.js"></script>
+</html>
