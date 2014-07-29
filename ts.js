@@ -40,6 +40,8 @@ var monthNames = {
        
 var timers = {};       
 
+var timerHandles = {};
+
 var fieldsets = [];     
     
 var navigablefieldsets = [];     
@@ -610,7 +612,7 @@ function loadLabels(){
   }
 }
 
-function addTimer(parent, limit, label){
+function addTimer(parent, limit, label, scale){
 
   if(parent == undefined || limit == undefined || label == undefined){
     return;
@@ -618,11 +620,11 @@ function addTimer(parent, limit, label){
   
   var tbl = document.createElement("div");
   tbl.style.display = "table";
-  tbl.style.borderSpacing = "5px";
-  tbl.style.width = "400px";
+  tbl.style.borderSpacing = (5 * scale) + "px";
+  tbl.style.width = (400 * scale) + "px";
 
   tbl.style.border = "1px solid #3465a4";
-  tbl.style.borderRadius = "10px";
+  tbl.style.borderRadius = (10 * scale) + "px";
 
   parent.appendChild(tbl);
    
@@ -645,39 +647,39 @@ function addTimer(parent, limit, label){
   cell1.style.display = "table-cell";
   cell1.style.textAlign = "left";
   cell1.style.verticalAlign = "middle";
-  cell1.style.fontSize = "18px";
-  cell1.style.padding = "10px";
+  cell1.style.fontSize = (18 * scale) + "px";
+  cell1.style.padding = (10 * scale) + "px";
   
   row1.appendChild(cell1);
   
-  addLabel(cell1, label, "24px");
+  addLabel(cell1, label, (2.5 * scale) + "em");
   
   var cell2 = document.createElement("div");
   cell2.style.display = "table-cell";
   cell2.style.textAlign = "center";
   cell2.style.verticalAlign = "middle";
-  cell2.style.padding = "10px";
-  cell2.style.paddingLeft = "60px";
-  cell2.style.paddingRight = "60px";
+  cell2.style.padding = (10 * scale) + "px";
+  cell2.style.paddingLeft = (60 * scale) + "px";
+  cell2.style.paddingRight = (60 * scale) + "px";
   cell2.style.paddingBottom = "0px";
   
   row2.appendChild(cell2);
   
   var disc = document.createElement("div");
   disc.style.border = "2px solid #3465a4";
-  disc.style.padding = "20px";
-  disc.style.fontSize = "120px";
-  disc.style.width = "350px";
-  disc.style.height = "350px";
-  disc.style.borderRadius = "350px";
+  disc.style.padding = (20 * scale) + "px";
+  disc.style.fontSize = (120 * scale) + "px";
+  disc.style.width = (350 * scale) + "px";
+  disc.style.height = (350 * scale) + "px";
+  disc.style.borderRadius = (350 * scale) + "px";
   disc.style.verticalAlign = "middle";
   disc.style.textAlign = "center";
-  disc.style.marginBottom = "-40px";
+  disc.style.marginBottom = (-40 * scale) + "px";
   
   cell2.appendChild(disc);
   
   var time = document.createElement("div");
-  time.style.marginTop = "100px";
+  time.style.marginTop = (100 * scale) + "px";
   time.id = "time" + parent.id;
   time.innerHTML = "00:00";
   
@@ -686,18 +688,28 @@ function addTimer(parent, limit, label){
   var cell3 = document.createElement("div");
   cell3.style.display = "cell";
   cell3.style.textAlign = "right";
-  cell3.style.paddingBottom = "10px";
-  cell3.style.paddingRight = "10px";
+  cell3.style.paddingBottom = (10 * scale) + "px";
+  cell3.style.paddingRight = (10 * scale) + "px";
   cell3.id = "cell3_" + parent.id;
   
   row3.appendChild(cell3);
   
   var btn = addButton(cell3, "Start", "green");
   
-  btn.style.width = "100px";
+  btn.style.width = (100 * scale) + "px";
   btn.setAttribute("limit", limit);
   btn.id = "btnTmr" + parent.id;
   btn.setAttribute("target", parent.id);
+  
+  btn.style.fontSize = (28 * scale) + "px";
+  
+  btn.style.minWidth = (100 * scale) + "px";
+  
+  btn.style.minHeight = (60 * scale) + "px";
+  
+  btn.style.width = (100 * scale) + "px";
+  
+  btn.style.height = (80 * scale) + "px";
   
   btn.onmousedown = function(){
     
@@ -705,9 +717,9 @@ function addTimer(parent, limit, label){
     
   }
   
+  return tbl;
+  
 }
-
-var timerHandles = {};
 
 function countDown(id, limit){
 
@@ -1607,9 +1619,10 @@ function addList(parent, options, optionType, target1, target2, action, lHeight,
 */
 function addCombo(parent, options, optionType, target1, target2, collapseOnClick, id, action, selected){
   if(parent == undefined || options == undefined || target1 == undefined || target2 == undefined || optionType == undefined){
+	 
     return;
   }
-  
+   
   if(collapseOnClick == undefined){
     
     collapseOnClick = false;
@@ -2072,8 +2085,7 @@ function loadPage(section){
       if(__$("main-content-area")){
         
         __$("main-content-area").style.height = (window.innerHeight - 40 - 50 - 300) + "px";
-        
-        
+        			
       }
       
     }
@@ -2274,285 +2286,314 @@ function loadPage(section){
   
   mainContentArea.appendChild(work);
   
-  for(var i = 0; i < fields.length; i++){
-          
-    if(fields[i].type == "radio" && __$("btn" + fields[i].id)){
-      
-      continue;
-      
-    }      
-    
-    if(fields[i].type == "hidden"){
-	
-		continue;
+  if(fieldsets[section].getAttribute("custom") != null){
+	  
+	  if(fieldsets[section].getAttribute("fs_onLoad") != null){
+		  
+		eval(fieldsets[section].getAttribute("fs_onLoad"));  
+		  
+	  }
+	  
+  } else {
+	  
+	  for(var i = 0; i < fields.length; i++){
+			  
+		if(fields[i].type == "radio" && __$("btn" + fields[i].id)){
+		  
+		  continue;
+		  
+		}      
 		
+		if(fields[i].type == "hidden"){
+		
+			continue;
+			
+		}
+			  
+		var row = document.createElement("div");
+		row.style.display = "table-row";
+		
+		work.appendChild(row);
+		
+		for(var j = 0; j < 4; j++){
+		  var cell = document.createElement("div");
+		  cell.style.display = "table-cell";
+		  
+		  switch(j){
+			case 0: 
+			  cell.style.width = "40%";
+			  cell.style.textAlign = "right";
+			  cell.style.padding = "20px";
+			  cell.id = "cell" + i + "." + j;
+			  
+			  var label = addLabel(cell, fields[i].label.innerHTML, textSize, "#333");
+			  
+			  break;
+			case 1: 
+			  cell.innerHTML = "&nbsp;";
+			  cell.style.width = "50px";
+			  cell.style.textAlign = "center";
+			  cell.style.paddingTop = "20px";
+			  cell.style.color = "red";
+			  cell.style.fontSize = "48px";
+			  cell.style.verticalAlign = "middle";
+			  cell.id = "cell" + i + "." + j;       
+			  break;
+			case 3: 
+			  cell.innerHTML = "&nbsp;";
+			  cell.style.width = "80px";
+			  cell.style.textAlign = "center";
+			  cell.style.verticalAlign = "middle";
+			  cell.id = "cell" + i + "." + j;    
+			  break;
+			case 2:  
+			  cell.id = "cell" + i + "." + j;  
+			  
+			  if(fields[i].type == "radio"){
+				
+				var labels = document.getElementsByTagName('LABEL');
+				for (var s = 0; s < labels.length; s++) {
+					if (labels[s].htmlFor != '' && labels[s].htmlFor == fields[i].name) {
+					  
+					  if(__$("cell" + i + ".0")){
+						
+						__$("cell" + i + ".0").innerHTML =  "";
+						
+						var label = addLabel(__$("cell" + i + ".0"), labels[s].innerHTML, textSize, "#333");
+						
+						break;
+						
+					  }
+					  
+					}
+				}
+				
+				var btns = document.getElementsByName(fields[i].name);
+				
+				var choiceTable = document.createElement("div");
+				choiceTable.style.display = "table";
+				
+				cell.appendChild(choiceTable);
+				
+				var choiceRow = document.createElement("table-row");
+				choiceRow.style.display = "table-row";
+				
+				choiceTable.appendChild(choiceRow);
+				
+				for(var r = 0; r < btns.length; r++){
+				  
+				  var choiceCell = document.createElement("table-cell");
+				  choiceCell.style.display = "table-cell";
+				  
+				  choiceRow.appendChild(choiceCell);
+				  
+				  var btnChoice = addButton(choiceCell, btns[r].label.innerHTML, (btns[r].checked ? "orange" : "blue"));
+				  
+				  btnChoice.style.fontSize = "20px";
+				  
+				  btnChoice.style.height = "60px";
+				  
+				  btnChoice.name = "btn" + btns[r].name;
+				  
+				  btnChoice.id = "btn" + btns[r].id;
+				  
+				  btnChoice.setAttribute("target", btns[r].id);
+				  
+				  btnChoice.setAttribute("pos", i);
+				  
+				  btnChoice.setAttribute("section", section);
+				  
+				  btnChoice.onmousedown = function(){
+					
+					var group = document.getElementsByName(this.name);
+					
+					for(var g = 0; g < group.length; g++){
+					  
+					  group[g].className = "button blue";
+					  
+					}
+					
+					if(__$(this.getAttribute("target"))){
+					  
+					  __$(this.getAttribute("target")).click();
+					
+					  this.className = "button orange";
+					  
+					}
+									  
+					cursorPos = parseInt(this.getAttribute("pos"));
+					
+					var section = parseInt(this.getAttribute("section"));
+					
+					navigateTo(cursorPos, section);              
+					
+				  }
+				  
+				}
+				
+			  } else {
+				
+				var fieldtype = fields[i].getAttribute("fieldtype");
+				
+				var callback = fields[i].getAttribute("callback");
+				
+				var txt = addTextbox(cell, fieldtype, fields[i].id, (callback != null ? callback : undefined));
+				
+				txt.style.fontSize = textSize;
+				  
+				txt.id = "textFor" + fields[i].id;
+				
+				txt.setAttribute("target", fields[i].id);
+				
+				txt.setAttribute("pos", i);
+				  
+				txt.setAttribute("section", section);
+				
+				if(fields[i].getAttribute("ajaxURL") != null){
+					
+					txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxURL"));
+					
+				} else if(fields[i].getAttribute("ajaxUrl") != null){
+					
+					txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxUrl"));
+					
+				} else if(fields[i].getAttribute("ajaxurl") != null){
+					
+					txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxurl"));
+					
+				}
+				
+				if(fields[i].tagName.toLowerCase() == "select" && fields[i].type.toLowerCase() == "select-multiple"){
+				  
+				  var values = "";
+				  
+				  var opts = fields[i].options;
+				  
+				  for(var k = 0; k < opts.length; k++){
+					
+					if(opts[k].selected){
+					  
+					  values += opts[k].innerHTML + ";";
+					  
+					}
+					
+				  }
+				  
+				  txt.value = values;
+				  
+				} else {
+				  
+				  txt.value = fields[i].value;                           
+				  
+				}  
+				  
+				txt.onfocus = function(){
+				  
+					cursorPos = parseInt(this.getAttribute("pos"));
+				  
+					var section = parseInt(this.getAttribute("section"));
+				  
+					navigateTo(cursorPos, section);
+				  
+					if(this.getAttribute("callback") != null){
+						
+						eval(this.getAttribute("callback"));
+						
+					}
+					
+					if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
+						
+						if(this.getAttribute("lookup") == null){
+							
+							lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
+		
+							this.setAttribute("lookup", true);
+							
+						} else {
+							
+							clearTimeout(lookupTimer);
+		
+							this.removeAttribute("lookup");
+							
+							if(__$("keyboard")){
+								
+								document.body.removeChild(__$("keyboard"));
+								
+							}
+							
+						}
+						
+					}
+					
+				}
+				
+				txt.onclick = function(){
+					
+					if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
+						
+						if(this.getAttribute("lookup") == null){
+							
+							lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
+		
+							this.setAttribute("lookup", true);
+							
+						} else {
+							
+							clearTimeout(lookupTimer);
+		
+							this.removeAttribute("lookup");
+							
+							if(__$("popupkeyboard")){
+								
+								document.body.removeChild(__$("popupkeyboard"));
+								
+							}
+							
+						}
+						
+					}
+					
+				}
+				
+			  }
+				
+			  break;
+		  }
+		  
+		  row.appendChild(cell);
+		}
+		
+	  }
+	  
 	}
-	      
-    var row = document.createElement("div");
-    row.style.display = "table-row";
-    
-    work.appendChild(row);
-    
-    for(var j = 0; j < 4; j++){
-      var cell = document.createElement("div");
-      cell.style.display = "table-cell";
-      
-      switch(j){
-        case 0: 
-          cell.style.width = "40%";
-          cell.style.textAlign = "right";
-          cell.style.padding = "20px";
-          cell.id = "cell" + i + "." + j;
-          
-          var label = addLabel(cell, fields[i].label.innerHTML, textSize, "#333");
-          
-          break;
-        case 1: 
-          cell.innerHTML = "&nbsp;";
-          cell.style.width = "50px";
-          cell.style.textAlign = "center";
-          cell.style.paddingTop = "20px";
-          cell.style.color = "red";
-          cell.style.fontSize = "48px";
-          cell.style.verticalAlign = "middle";
-          cell.id = "cell" + i + "." + j;       
-          break;
-        case 3: 
-          cell.innerHTML = "&nbsp;";
-          cell.style.width = "80px";
-          cell.style.textAlign = "center";
-          cell.style.verticalAlign = "middle";
-          cell.id = "cell" + i + "." + j;    
-          break;
-        case 2:  
-          cell.id = "cell" + i + "." + j;  
-          
-          if(fields[i].type == "radio"){
-            
-            var labels = document.getElementsByTagName('LABEL');
-            for (var s = 0; s < labels.length; s++) {
-                if (labels[s].htmlFor != '' && labels[s].htmlFor == fields[i].name) {
-                  
-                  if(__$("cell" + i + ".0")){
-                    
-                    __$("cell" + i + ".0").innerHTML =  "";
-                    
-                    var label = addLabel(__$("cell" + i + ".0"), labels[s].innerHTML, textSize, "#333");
-                    
-                    break;
-                    
-                  }
-                  
-                }
-            }
-            
-            var btns = document.getElementsByName(fields[i].name);
-            
-            var choiceTable = document.createElement("div");
-            choiceTable.style.display = "table";
-            
-            cell.appendChild(choiceTable);
-            
-            var choiceRow = document.createElement("table-row");
-            choiceRow.style.display = "table-row";
-            
-            choiceTable.appendChild(choiceRow);
-            
-            for(var r = 0; r < btns.length; r++){
-              
-              var choiceCell = document.createElement("table-cell");
-              choiceCell.style.display = "table-cell";
-              
-              choiceRow.appendChild(choiceCell);
-              
-              var btnChoice = addButton(choiceCell, btns[r].label.innerHTML, (btns[r].checked ? "orange" : "blue"));
-              
-              btnChoice.style.fontSize = "20px";
-              
-              btnChoice.style.height = "60px";
-              
-              btnChoice.name = "btn" + btns[r].name;
-              
-              btnChoice.id = "btn" + btns[r].id;
-              
-              btnChoice.setAttribute("target", btns[r].id);
-              
-              btnChoice.setAttribute("pos", i);
-              
-              btnChoice.setAttribute("section", section);
-              
-              btnChoice.onmousedown = function(){
-                
-                var group = document.getElementsByName(this.name);
-                
-                for(var g = 0; g < group.length; g++){
-                  
-                  group[g].className = "button blue";
-                  
-                }
-                
-                if(__$(this.getAttribute("target"))){
-                  
-                  __$(this.getAttribute("target")).click();
-                
-                  this.className = "button orange";
-                  
-                }
-                                  
-                cursorPos = parseInt(this.getAttribute("pos"));
-                
-                var section = parseInt(this.getAttribute("section"));
-                
-                navigateTo(cursorPos, section);              
-                
-              }
-              
-            }
-            
-          } else {
-            
-            var fieldtype = fields[i].getAttribute("fieldtype");
-            
-            var callback = fields[i].getAttribute("callback");
-            
-            var txt = addTextbox(cell, fieldtype, fields[i].id, (callback != null ? callback : undefined));
-            
-            txt.style.fontSize = textSize;
-              
-            txt.id = "textFor" + fields[i].id;
-            
-            txt.setAttribute("target", fields[i].id);
-            
-            txt.setAttribute("pos", i);
-              
-            txt.setAttribute("section", section);
-            
-            if(fields[i].getAttribute("ajaxURL") != null){
-				
-				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxURL"));
-				
-			} else if(fields[i].getAttribute("ajaxUrl") != null){
-				
-				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxUrl"));
-				
-			} else if(fields[i].getAttribute("ajaxurl") != null){
-				
-				txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxurl"));
-				
-			}
-            
-            if(fields[i].tagName.toLowerCase() == "select" && fields[i].type.toLowerCase() == "select-multiple"){
-              
-              var values = "";
-              
-              var opts = fields[i].options;
-              
-              for(var k = 0; k < opts.length; k++){
-                
-                if(opts[k].selected){
-                  
-                  values += opts[k].innerHTML + ";";
-                  
-                }
-                
-              }
-              
-              txt.value = values;
-              
-            } else {
-              
-              txt.value = fields[i].value;                           
-              
-            }  
-              
-            txt.onfocus = function(){
-              
-				cursorPos = parseInt(this.getAttribute("pos"));
-              
-				var section = parseInt(this.getAttribute("section"));
-              
-				navigateTo(cursorPos, section);
-              
-				if(this.getAttribute("callback") != null){
-					
-					eval(this.getAttribute("callback"));
-					
-				}
-				
-				if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
-					
-					if(this.getAttribute("lookup") == null){
-						
-						lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
-	
-						this.setAttribute("lookup", true);
-						
-					} else {
-						
-						clearTimeout(lookupTimer);
-	
-						this.removeAttribute("lookup");
-						
-						if(__$("keyboard")){
-							
-							document.body.removeChild(__$("keyboard"));
-							
-						}
-						
-					}
-					
-				}
-				
-            }
-            
-            txt.onclick = function(){
-				
-				if(this.getAttribute("ajaxURL") != null || this.getAttribute("ajaxUrl") != null || this.getAttribute("ajaxurl") != null){
-					
-					if(this.getAttribute("lookup") == null){
-						
-						lookupTimer = setTimeout("checkLookup('" + this.getAttribute("target") + "')", 100);
-	
-						this.setAttribute("lookup", true);
-						
-					} else {
-						
-						clearTimeout(lookupTimer);
-	
-						this.removeAttribute("lookup");
-						
-						if(__$("popupkeyboard")){
-							
-							document.body.removeChild(__$("popupkeyboard"));
-							
-						}
-						
-					}
-					
-				}
-				
-			}
-            
-          }
-            
-          break;
-      }
-      
-      row.appendChild(cell);
-    }
-    
-  }
-  
-  cursorPos = 0;
-  
-  navigateTo(cursorPos, section);
+
+	cursorPos = 0;
+
+	navigateTo(cursorPos, section);
+	  
 }
 
 function navigateTo(pos, section){
   
+	timers = {};       
+
+	for(var t in timerHandles){
+		
+		clearTimeout(timerHandles[t]);
+		
+	}
+	
+	timerHandles = {};
+
+  if(__$("popupkeyboard")){
+    
+	  document.body.removeChild(__$("popupkeyboard"));
+
+	}
+  
   var fields = navigablefieldsets[section];		// fieldsets[section].elements;
   
-  if(fields[pos].getAttribute("disabled") != null){
+  if(fields[pos] != undefined && fields[pos].getAttribute("disabled") != null){
     
     if(incomplete)
       return;
@@ -2574,13 +2615,13 @@ function navigateTo(pos, section){
     return;
   }
       
-  if(__$("textFor" + fields[pos].id)){
+  if(fields[pos] != undefined && __$("textFor" + fields[pos].id)){
 	  
 	  __$("textFor" + fields[pos].id).focus();
 	  
   }     
     
-  var fieldtype = fields[pos].getAttribute("fieldtype");
+  var fieldtype = (fields[pos] != undefined ? fields[pos].getAttribute("fieldtype") : null);
   
   if(!__$("cursor")){
     
@@ -2597,14 +2638,14 @@ function navigateTo(pos, section){
     __$("cell" + pos + ".1").appendChild(__$("cursor"));
     
   }
-  
-  if(__$("stage")){
+   
+  if(fieldsets[section].getAttribute("custom") == null && __$("stage")){
     
     __$("stage").innerHTML = "&nbsp;";
     
   }
   
-  if(__$("stage") && __$("textFor" + fields[pos].id)){
+  if(fields[pos] != undefined && __$("stage") && __$("textFor" + fields[pos].id)){
     
     clearTimeout(tracker);
     
@@ -2906,7 +2947,7 @@ function navigateTo(pos, section){
           
           var fields = navigablefieldsets[section];		// fieldsets[section].elements;
           
-          if(fields[pos].type == "radio"){
+          if(fields[pos] != undefined && fields[pos].type == "radio"){
             
             var radios = document.getElementsByName(fields[pos].name);
             
@@ -2933,7 +2974,7 @@ function navigateTo(pos, section){
            
     if(btnBack != null){
                 
-      if(fields[pos].type == "radio"){
+      if(fields[pos] != undefined && fields[pos].type == "radio"){
         if(fields[pos - 1]){
           var radios = document.getElementsByName(fields[pos - 1].name);
                 
@@ -2982,63 +3023,100 @@ function navigateTo(pos, section){
     }
       
     if(btnNext != null){
-            
-      if(fields[pos].type == "radio"){
-        var radios = document.getElementsByName(fields[pos].name);
-              
-        btnNext.setAttribute("pos", pos + radios.length - 1);
-      } else {
-        
-        btnNext.setAttribute("pos", pos);
-        
-      }
-    
-      btnNext.setAttribute("section", section);      
       
-      if(section < fieldsets.length && parseInt(btnNext.getAttribute("pos")) < fields.length - 1){
-        
-        btnNext.innerHTML = "Next";
-        
-        btnNext.onmousedown = function(){
-                
-          var pos = parseInt(this.getAttribute("pos")) + 1;
-          
-          var section = parseInt(this.getAttribute("section"));
-          
-          navigateTo(pos, section);
-          
-        };
-        
-      } else if((section < fieldsets.length - 1 && parseInt(btnNext.getAttribute("pos")) == fields.length - 1) || (section == fieldsets.length - 1 && parseInt(btnNext.getAttribute("pos")) < fields.length - 1)){
-        
-        btnNext.innerHTML = "Next";        
-        
-        btnNext.onmousedown = function(){
-             
-          if(!incomplete){                      
-            var section = parseInt(this.getAttribute("section")) + 1;
-            
-            loadPage(section);          
-          }
-          
-        };
-        
-      } else {
-        
-        btnNext.innerHTML = "Finish";
-        
-        btnNext.onmousedown = function(){
-        
-            if(!incomplete){  
-              
-              document.forms[0].submit();
-              
-            }
-          
-        };
-        
-      }
-      
+      if(fields[pos] != undefined){ 
+		       
+		  if(fields[pos].type == "radio"){
+			var radios = document.getElementsByName(fields[pos].name);
+				  
+			btnNext.setAttribute("pos", pos + radios.length - 1);
+		  } else {
+			
+			btnNext.setAttribute("pos", pos);
+			
+		  }
+		
+		  btnNext.setAttribute("section", section);      
+		  
+		  if(section < fieldsets.length && parseInt(btnNext.getAttribute("pos")) < fields.length - 1){
+			
+			btnNext.innerHTML = "Next";
+			
+			btnNext.onmousedown = function(){
+					
+			  var pos = parseInt(this.getAttribute("pos")) + 1;
+			  
+			  var section = parseInt(this.getAttribute("section"));
+			  
+			  navigateTo(pos, section);
+			  
+			};
+			
+		  } else if((section < fieldsets.length - 1 && parseInt(btnNext.getAttribute("pos")) == fields.length - 1) || (section == fieldsets.length - 1 && parseInt(btnNext.getAttribute("pos")) < fields.length - 1)){
+			
+			btnNext.innerHTML = "Next";        
+			
+			btnNext.onmousedown = function(){
+				 
+			  if(!incomplete){                      
+				var section = parseInt(this.getAttribute("section")) + 1;
+				
+				loadPage(section);          
+			  }
+			  
+			};
+			
+		  } else {
+			
+			btnNext.innerHTML = "Finish";
+			
+			btnNext.onmousedown = function(){
+			
+				if(!incomplete){  
+				  
+				  document.forms[0].submit();
+				  
+				}
+			  
+			};
+			
+		  }
+		} else {
+			
+			btnNext.setAttribute("section", section); 
+			
+			if(section < fieldsets.length - 1){
+								
+				btnNext.innerHTML = "Next";        
+				
+				btnNext.onmousedown = function(){
+					 
+				  if(!incomplete){                      
+					var section = parseInt(this.getAttribute("section")) + 1;
+					
+					loadPage(section);          
+				  }
+				  
+				};
+				
+			} else {
+				
+				btnNext.innerHTML = "Finish";
+				
+				btnNext.onmousedown = function(){
+				
+					if(!incomplete){  
+					  
+					  document.forms[0].submit();
+					  
+					}
+				  
+				};
+			
+				
+			}
+			
+		}
     }        
     
   }
@@ -3431,7 +3509,7 @@ function checkLookup(id){
 	
 	clearTimeout(lookupTimer);
 	
-    if(__$("textFor" + id).getAttribute("lookup") != null && __$(id).getAttribute("ajaxURL") != null){
+    if(__$("textFor" + id) && __$(id) && __$("textFor" + id).getAttribute("lookup") != null && __$(id).getAttribute("ajaxURL") != null){
 		
 		if(trackingString == __$(id).value.trim() && __$("popupkeyboard")){
 			
@@ -3458,6 +3536,20 @@ function checkLookup(id){
 	}
     
     lookupTimer = setTimeout("checkLookup('" + id + "')", 200);
+}
+
+function clearUl(id){
+	
+	if(__$(id)){
+		var kids = __$(id).children;
+	
+		for(var i = 0; i < kids.length; i++){
+			
+			kids[i].style.backgroundColor = (kids[i].getAttribute("tag") == "odd" ? "#eee" : "");
+			
+		}
+	}
+
 }
 		
 init();
