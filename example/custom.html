@@ -1,0 +1,136 @@
+<!DOCTYPE=html>
+<html>
+	<head>
+		<title>Current Visit</title>
+		<script>
+			var cancelDestination = "index.html";
+			
+			function loadCustom(){
+			
+				if(__$("main-content-area")){
+					
+					__$("main-content-area").innerHTML = "";
+					
+					var table = document.createElement("div");					
+					table.style.display = "table";
+					table.style.margin = "auto";
+					// table.style.border = "1px solid #000";
+					
+					__$("main-content-area").appendChild(table);
+					
+					var row1 = document.createElement("div");
+					row1.style.display = "table-row";
+					
+					table.appendChild(row1);
+					
+					var cell1_1 = document.createElement("div");
+					cell1_1.style.display = "table-cell";
+					cell1_1.id = "timer1";
+					
+					row1.appendChild(cell1_1);
+					
+					var timer1 = addTimer(cell1_1, 10, "Rapid Test Timer", 0.55);
+					
+					timer1.style.marginLeft = "40px";
+					
+					timer1.style.marginRight = "40px";
+					
+					var cell1_2 = document.createElement("div");
+					cell1_2.style.display = "table-cell";
+					cell1_2.id = "timer2";
+					cell1_2.style.textAlign = "right";
+					
+					row1.appendChild(cell1_2);
+					
+					var timer2 = addTimer(cell1_2, 15, "Gold Test Timer", 0.55);
+					
+					timer2.style.marginLeft = "40px";
+					
+					timer2.style.marginRight = "40px";
+					
+					var row2 = document.createElement("div");
+					row2.style.display = "table-row";
+					
+					table.appendChild(row2);
+					
+					var cell2_1 = document.createElement("div");
+					cell2_1.style.display = "table-cell";
+					cell2_1.id = "label1";
+					cell2_1.style.textAlign = "right";
+					cell2_1.style.padding = "10px";
+					
+					row2.appendChild(cell2_1);
+					
+					addLabel(cell2_1, "Result", "32px", "black");
+					
+					var cell2_2 = document.createElement("div");
+					cell2_2.style.display = "table-cell";
+					cell2_2.id = "text1";
+					cell2_2.style.padding = "10px";
+					
+					row2.appendChild(cell2_2);
+					
+					var text = addTextbox(cell2_2, "text", document.getElementById("customresult"));
+					text.id = "resultdisplay";
+					
+					text.style.fontSize = "28px";
+					
+					var div = document.createElement("div");
+					div.style.width = "100%";
+					div.style.height = "100%";
+					div.style.overflow = "auto";
+					
+					var combo = addCombo(__$("stage"), {"Positive":"Reactive","Negative":"Non-Reactive"}, "single", document.getElementById("resultdisplay"), document.getElementById("customresult"));
+					
+					combo.style.fontSize = "28px";
+
+					combo.style.textAlign = "left";
+          
+					if(btnClear){
+						
+						btnClear.onclick = function(){
+							
+							document.getElementById("resultdisplay").value = "";
+							
+							document.getElementById("customresult").value = "";
+							
+							clearUl("ul2");
+							
+						}
+						
+					}
+          
+				}
+				
+			}
+			
+		</script>
+	</head>
+	<body>
+		<form>
+			<fieldset>
+				<legend>Single Field Example:</legend>
+				<label for="first_name">First Name:</label>
+				<input id="first_name" name="first_name" type="text" value="" ajaxURL="data/names.txt" />
+				
+				<input id="hidden1" name="hidden1" type="hidden" value="hidden1" />
+				<input id="hidden2" name="hidden2" type="hidden" value="hidden2" />
+				<br>
+			</fieldset>
+			<fieldset custom=true fs_onLoad="loadCustom()">
+				<legend>HIV Testing Protocol</legend>
+				
+				<input id="customresult" name="customresult" type="hidden" value="" />
+				
+			</fieldset>
+			<fieldset>
+				<legend>Single Field Example:</legend>
+				<label for="last_name">Last Name:</label>
+				<input id="last_name" name="last_name" type="text" value="" />
+				
+				<br>
+			</fieldset>
+		</form>
+		<script src="../ts.js"></script>
+    </body>
+</html>
