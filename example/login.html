@@ -36,9 +36,6 @@
 	<body>
 		<form>
 			<fieldset>
-				<label for="location">Location:</label>
-				<input id="location" name="location" type="text" fieldtype="barcode" value="" callback="doLogin('location')" />
-				<br>
 				<legend>Login:</legend>
 				<label for="username">Username:</label>
 				<input id="username" name="username" type="text" value="" />
@@ -49,6 +46,9 @@
 				<br>
 				<label for="password">Password:</label>
 				<input id="password" name="password" type="password" value="" />
+				<br>
+				<label for="location">Location:</label>
+				<input id="location" name="location" type="text" fieldtype="barcode" value="" callback="doLogin('location')" />
 			</fieldset>
 			<input type="reset" value="Reset" />
 			<input type="submit" value="Submit" />
