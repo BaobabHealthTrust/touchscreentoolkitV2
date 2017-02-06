@@ -97,6 +97,7 @@ function checkCtrl(obj) {
 }
 
 function init() {
+
     var style = document.createElement("style");
     style.innerHTML = styles;
 
@@ -2206,6 +2207,7 @@ function resize() {
 }
 
 function loadPage(section, back) {
+
     if (isNaN(section))
         return;
 
@@ -2647,6 +2649,12 @@ function loadPage(section, back) {
                             } else if (fields[i].getAttribute("ajaxurl") != null) {
 
                                 txt.setAttribute("ajaxURL", fields[i].getAttribute("ajaxurl"));
+
+                            }
+
+                            if(fields[i].tagName.toLowerCase() == "select" || ((fieldtype || "").match(/date/i))) {
+
+                                txt.setAttribute("readonly", true);
 
                             }
 
